@@ -79,12 +79,13 @@ class _MyHomePageState extends State<MyHomePage> {
               child:  FloatingActionButton(
                 onPressed: () async {
                   var data = {
-                    "id" : "ID0205",
-                    "name" : "이병준",
-                    "age" : "25"
+                    "id" : "1",
+                    "name" : "Jin",
+                    "age" : "20"
                   };
                   var body = json.encode(data);
-                  http.Response _res = await http.post(_url2, headers: {"Content-Type": "application/json"}, body: body);
+                  http.Response _res = await http.post(_url2, headers: {"Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"}, body: body);
                   print(_res.statusCode);
                   print(_res.body);
                   setState(() {
