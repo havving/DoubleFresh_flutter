@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import 'User/login.dart';
+
 void main() {
-  runApp(MyApp());
+  runApp(LoginPage());
 }
 
 class MyApp extends StatelessWidget {
@@ -100,131 +102,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-/*
-import 'package:double_fresh/model/Post.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HttpExampleWidget(),
-    );
-  }
-  }
-
-class HttpExampleWidget extends StatefulWidget {
-  @override
-  _HttpExampleWidgetState createState() => _HttpExampleWidgetState();
-}
-
-class _HttpExampleWidgetState extends State<HttpExampleWidget> {
-  late Future<Post> post;
-
-  Future<Post> fetchPost() async {
-    var url = Uri.parse('http://localhost:3000/signup');
-    final response = await http.post(
-      url,
-      body: jsonEncode(
-        {
-          'id': "12",
-          'password': "1234",
-          'name': "Jin",
-          'phone': "0101234123"
-        },
-      ),
-      headers: {'Content-Type': "application/json"},
-    );
-
-    if (response.statusCode == 200 ) {
-      return Post.fromJSON(json.decode(response.body));
-    } else {
-      throw Exception('Failed to load post');
-    }
-  }
-
-
-  List<Post> _posts = [];
-
-  // GET
-  void _fetchPosts() async {
-    // 실제 http 호출 (비동기)
-    var url = Uri.parse('https://jsonplaceholder.typicode.com/posts');
-    final response = await http.get(url);
-    final List<Post> parseResponse = jsonDecode(response.body)
-        .map<Post>((json) => Post.fromJSON(json))
-        .toList();
-    setState(() {
-      _posts.clear();
-      _posts.addAll(parseResponse);
-    });
-  }
-
-  // POST
-  void _createPost() async {
-    // var url = Uri.parse('https://jsonplaceholder.typicode.com/posts');
-    var url = Uri.parse('http://192.168.0.22:3000/signup');
-    final response = await http.post(
-      url,
-      body: jsonEncode(
-        {
-          'id': "12",
-          'password': "1234",
-          'name': "Jin",
-          'phone': "0101234123"
-        },
-      ),
-      headers: {'Content-Type': "application/json"},
-    );
-
-
-    final Post parsedResponse = Post.fromJSON(jsonDecode(response.body));
-    _posts.clear();
-    _posts.add(parsedResponse);
-  }
-
-  // 처음 한 번만 호출
-  @override
-  void initState() {
-    super.initState();
-    post = fetchPost();
-    // _fetchPosts();
-    // _createPost();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: ListView.builder(
-          itemCount: this._posts.length,
-          itemBuilder: (context, index) {
-            final post = this._posts[index];
-            return ListTile(
-                title: Text(post.name),
-                subtitle: Text('Id: ${post.id}  Phone: ${post.phone}'));
-          },
-        ),
-      ),
-    );
-  }
-}
-*/
