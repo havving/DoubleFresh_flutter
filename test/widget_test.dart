@@ -13,18 +13,27 @@ import 'package:double_fresh/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    await tester.pumpWidget(TextExample());
   });
+}
+
+class TextExample extends StatefulWidget {
+  @override
+  _TextExampleState createState() => _TextExampleState();
+}
+
+class _TextExampleState extends State<TextExample> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[FadeInImage.assetNetwork(placeholder:'assets/images/es.png', image: "https://picsum.photos/200")],
+          ),
+        ),
+      ),
+    );
+  }
 }

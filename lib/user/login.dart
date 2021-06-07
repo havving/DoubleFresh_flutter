@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   @override
@@ -6,6 +9,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool isLogin = false;
+  final _url = Uri.parse('http://192.168.0.22:3000/user/login_user');
+
   final _idController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -20,8 +26,8 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 80.0),
               Column(
                 children: <Widget>[
-                  Image.asset('assets/images/es.png'),
-                  SizedBox(height: 16.0),
+                  Image.asset('assets/images/sprout.png'),
+                  SizedBox(height: 8.0),
                   Text('Double Fresh'),
                 ],
               ),
@@ -46,8 +52,21 @@ class _LoginPageState extends State<LoginPage> {
                 children: <Widget>[
                   RaisedButton(
                     child: Text('로그인'),
-                    onPressed: () {
-                      Navigator.pop(context);
+                    onPressed: () async {
+                      var data = {
+                        "id" : _idController.text,
+                        "password" : _passwordController.text,
+                      };
+                      var body = json.encode(data);
+                      http.Response _res = await http.post(_url,
+                          headers: {"Content-Type": "application/json",
+                            "Access-Control-Allow-Origin": "*"}, body: body);
+                      print(_res.body);
+                      if (_res.body.toString() == 'true') {
+                        print('true');
+                      } else {
+                        print('false');
+                      }
                     },
                   ),
                 ],
