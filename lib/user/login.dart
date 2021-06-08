@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:double_fresh/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+import '../main.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -9,7 +12,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool isLogin = false;
+  var _isChecked = false;
   final _url = Uri.parse('http://192.168.0.22:3000/user/login_user');
 
   final _idController = TextEditingController();
@@ -48,26 +51,51 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 obscureText: true,
               ),
-              ButtonBar(
-                children: <Widget>[
-                  RaisedButton(
-                    child: Text('로그인'),
-                    onPressed: () async {
-                      var data = {
-                        "id" : _idController.text,
-                        "password" : _passwordController.text,
-                      };
-                      var body = json.encode(data);
-                      http.Response _res = await http.post(_url,
-                          headers: {"Content-Type": "application/json",
-                            "Access-Control-Allow-Origin": "*"}, body: body);
-                      print(_res.body);
-                      if (_res.body.toString() == 'true') {
-                        print('true');
-                      } else {
-                        print('false');
-                      }
-                    },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: _isChecked,
+                        onChanged: (value) {
+                          setState(() {
+                            _isChecked = value!;
+                          });
+                        },
+                      ),
+                      Text('ID 저장'),
+                    ],
+                  ),
+                  ButtonBar(
+                    children: <Widget>[
+                      RaisedButton(
+                        child: Text('로그인'),
+                        onPressed: () async {
+                          var data = {
+                            "id": _idController.text,
+                            "password": _passwordController.text,
+                            "rememberId": _isChecked
+                          };
+                          var body = json.encode(data);
+                          http.Response _res = await http.post(_url,
+                              headers: {
+                                "Content-Type": "application/json",
+                                "Access-Control-Allow-Origin": "*"
+                              },
+                              body: body);
+                          print(_res.body);
+                          if (_res.body.toString() == 'true') {
+                            Navigator.push(
+                              context,
+                              CustomRoute(builder: (context) => HomePage()),
+                            );
+                          } else {
+                            loginFailAlert(context, _res.body);
+                          }
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -76,5 +104,32 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  /// 로그인 실패 팝업
+  void loginFailAlert(BuildContext context, text) {
+    var alert = AlertDialog(
+      title: Text("로그인 실패"),
+      content: SingleChildScrollView(
+        child: ListBody(
+          children: <Widget>[Text(text)],
+        ),
+      ),
+      actions: <Widget>[
+        FlatButton(
+          child: Text('OK'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return alert;
+        });
   }
 }

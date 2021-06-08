@@ -3,11 +3,24 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import 'home/calendar.dart';
 import 'user/login.dart';
 
 void main() {
-  runApp(LoginPage());
+  runApp(MaterialApp(home: Calendar()));
 }
+
+class CustomRoute<T> extends MaterialPageRoute<T> {
+  CustomRoute({ required WidgetBuilder builder, RouteSettings? settings })
+      : super(builder: builder, settings: settings);
+
+  @override
+  Widget buildTransitions(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+    return FadeTransition(opacity: animation, child: child);
+  }
+}
+
+
 
 class MyApp extends StatelessWidget {
   @override
