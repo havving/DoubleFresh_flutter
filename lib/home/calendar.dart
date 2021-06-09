@@ -8,12 +8,12 @@ class Calendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Double_Fresh',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'cell_calendar example'),
+      home: MyHomePage(title: '이달의 샐러드'),
     );
   }
 }
