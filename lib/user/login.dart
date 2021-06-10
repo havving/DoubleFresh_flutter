@@ -109,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
   /// 로그인 실패 팝업
   void loginFailAlert(BuildContext context, text) {
     var alert = AlertDialog(
-      title: Text("로그인 실패"),
+      title: Text('로그인 실패'),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[Text(text)],
