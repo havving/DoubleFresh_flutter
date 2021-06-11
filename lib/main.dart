@@ -20,8 +20,6 @@ class CustomRoute<T> extends MaterialPageRoute<T> {
   }
 }
 
-
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
