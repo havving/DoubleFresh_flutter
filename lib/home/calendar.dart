@@ -1,5 +1,6 @@
-import 'package:cell_calendar/cell_calendar.dart';
 import 'package:flutter/material.dart';
+import 'package:cell_calendar/cell_calendar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'calendar_event.dart';
 
@@ -46,7 +47,7 @@ class _MyHomePage extends State<StatefulWidget> {
         drawer: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
-            children: [
+            children: <Widget>[
               UserAccountsDrawerHeader(
                 accountName: Text("황혜빈 님"),
                 accountEmail: Text("6월 정기구독 중"),
@@ -56,37 +57,74 @@ class _MyHomePage extends State<StatefulWidget> {
                 ),
                 // 빨간 부분을 꾸미기 위한 기능
                 decoration: BoxDecoration(
-                    color: Colors.red[200],
+                    color: Colors.green[200],
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(40.0),
                         bottomRight: Radius.circular(40.0))),
               ),
-              ListTile(
+              ExpansionTile(
                 leading: Icon(
                   Icons.face,
                   color: Colors.grey[850],
                 ),
-                title: Text('내 정보'),
-                onTap: () => {
-                  ListTile(title: Text('비밀번호 변경하기')),
-                },
-                trailing: Icon(Icons.add),
+                title: Text(
+                  '내 정보',
+                ),
+                children: <Widget>[
+                  ListTile(
+                    leading: Icon(
+                      Icons.lock_outline,
+                      color: Colors.grey[850],
+                    ),
+                    title: Text('비밀번호 변경하기'),
+                  ),
+                ],
               ),
-              ListTile(
+              ExpansionTile(
                 leading: Icon(
                   Icons.settings,
                   color: Colors.grey[850],
                 ),
-                title: Text('Setting'),
-                onTap: () => {print("Setting!!")},
-                trailing: Icon(Icons.add),
+                title: Text('설정'),
+                children: <Widget>[
+                  ListTile(
+                    leading: Icon(
+                      Icons.calendar_today,
+                      color: Colors.grey[850],
+                    ),
+                    title: Text('픽업 날짜 고정하기'),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.access_time,
+                      color: Colors.grey[850],
+                    ),
+                    title: Text('픽업 시간 고정하기'),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.speaker_notes_outlined ,
+                      color: Colors.grey[850],
+                    ),
+                    title: Text('요청사항 수정하기'),
+                  ),
+                ],
               ),
               ListTile(
                 leading: Icon(
                   Icons.local_phone,
                   color: Colors.grey[850],
                 ),
-                title: Text('xxx-xxx-xxxx'),
+                title: Text('Tel'),
+                onTap: () => launch('tel://0324289233'),
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.launch,
+                  color: Colors.grey[850],
+                ),
+                title: Text('Instagram'),
+                onTap: () => launch('https://www.instagram.com/doublefresh_official/'),
               ),
             ],
           ),
