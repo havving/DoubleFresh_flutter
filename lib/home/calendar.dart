@@ -55,7 +55,7 @@ class _MyHomePage extends State<StatefulWidget> {
                   backgroundColor: Colors.white,
                   backgroundImage: AssetImage('assets/images/sprout.png'),
                 ),
-                // 빨간 부분을 꾸미기 위한 기능
+                // 배경색
                 decoration: BoxDecoration(
                     color: Colors.green[200],
                     borderRadius: BorderRadius.only(
@@ -93,6 +93,7 @@ class _MyHomePage extends State<StatefulWidget> {
                       color: Colors.grey[850],
                     ),
                     title: Text('픽업 날짜 고정하기'),
+                    // onTap: ,
                   ),
                   ListTile(
                     leading: Icon(
@@ -100,6 +101,18 @@ class _MyHomePage extends State<StatefulWidget> {
                       color: Colors.grey[850],
                     ),
                     title: Text('픽업 시간 고정하기'),
+                    onTap: () {
+                      Future<TimeOfDay?> selectedTime = showTimePicker(
+                        initialTime: TimeOfDay.now(),
+                        context: context,
+                      );
+                      selectedTime.then((time) {
+                        setState(() {
+                          _selectedTime = time;
+                        });
+                        print('선택되었습니다');
+                      });
+                    },
                   ),
                   ListTile(
                     leading: Icon(
@@ -107,6 +120,7 @@ class _MyHomePage extends State<StatefulWidget> {
                       color: Colors.grey[850],
                     ),
                     title: Text('요청사항 수정하기'),
+                    // onTap: TextField(),
                   ),
                 ],
               ),
