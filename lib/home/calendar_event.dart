@@ -15,6 +15,10 @@ List<CalendarEvent> sampleEvents() {
         eventName: "부채살 샐러드",
         eventDate: today.add(Duration(days: 7)),
         eventBackgroundColor: Colors.pink),
+    CalendarEvent(
+        eventName: "닭가슴살 샐러드",
+        eventDate: today.add(Duration(days: 20)),
+        eventBackgroundColor: Colors.orange),
   ];
   return sampleEvents;
 }

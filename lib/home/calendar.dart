@@ -3,6 +3,7 @@ import 'package:cell_calendar/cell_calendar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'calendar_event.dart';
+import 'dialog/pickupDateDialog.dart';
 
 class Calendar extends StatefulWidget {
   // Calendar({Key? key, required this.title}) : super(key: key);
@@ -77,6 +78,37 @@ class _MyHomePage extends State<StatefulWidget> {
                       color: Colors.grey[850],
                     ),
                     title: Text('비밀번호 변경하기'),
+                    onTap: () => showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (_) => AlertDialog(
+                        title: Text('비밀번호 변경하기'),
+                        content: SingleChildScrollView(
+                          child: ListBody(
+                            children: <Widget>[
+                              TextField(
+                                decoration:
+                                    InputDecoration(labelText: '새 비밀번호'),
+                              ),
+                            ],
+                          ),
+                        ),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text('닫기'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          FlatButton(
+                            child: Text('확인'),
+                            onPressed: () {
+                              // TODO 비밀번호 변경
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -93,7 +125,12 @@ class _MyHomePage extends State<StatefulWidget> {
                       color: Colors.grey[850],
                     ),
                     title: Text('픽업 날짜 고정하기'),
-                    // onTap: ,
+                    onTap: () => showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (_) {
+                          return PickupDateDialog();
+                        }),
                   ),
                   ListTile(
                     leading: Icon(
@@ -116,11 +153,41 @@ class _MyHomePage extends State<StatefulWidget> {
                   ),
                   ListTile(
                     leading: Icon(
-                      Icons.speaker_notes_outlined ,
+                      Icons.speaker_notes_outlined,
                       color: Colors.grey[850],
                     ),
                     title: Text('요청사항 수정하기'),
-                    // onTap: TextField(),
+                    onTap: () => showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (_) => AlertDialog(
+                        title: Text('요청사항 수정하기'),
+                        content: SingleChildScrollView(
+                          child: ListBody(
+                            children: <Widget>[
+                              TextField(
+                                decoration:
+                                    InputDecoration(labelText: '요청사항 입력'),
+                              ),
+                            ],
+                          ),
+                        ),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text('닫기'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          FlatButton(
+                            child: Text('확인'),
+                            onPressed: () {
+                              // TODO 요청사항 확인
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -138,7 +205,8 @@ class _MyHomePage extends State<StatefulWidget> {
                   color: Colors.grey[850],
                 ),
                 title: Text('Instagram'),
-                onTap: () => launch('https://www.instagram.com/doublefresh_official/'),
+                onTap: () =>
+                    launch('https://www.instagram.com/doublefresh_official/'),
               ),
             ],
           ),
@@ -198,6 +266,7 @@ class _MyHomePage extends State<StatefulWidget> {
                   eventDate.day == date.day;
             }).toList();
             showDialog(
+                barrierDismissible: false,
                 context: context,
                 builder: (_) => AlertDialog(
                       title: Text(date.month.monthName +
@@ -223,20 +292,28 @@ class _MyHomePage extends State<StatefulWidget> {
                       ),
                       actions: <Widget>[
                         FlatButton(
-                          child: Text('예약하기'),
+                          child: Text('닫기'),
                           onPressed: () {
-                            Future<TimeOfDay?> selectedTime = showTimePicker(
-                              initialTime: TimeOfDay.now(),
-                              context: context,
-                            );
-                            selectedTime.then((time) {
-                              setState(() {
-                                _selectedTime = time;
-                              });
-                              print('선택되었습니다');
-                            });
+                            Navigator.of(context).pop();
                           },
                         ),
+                        // 오늘 이후의 날짜만 '예약하기' 가능
+                        if (DateTime.now().day <= date.day)
+                          FlatButton(
+                            child: Text('예약하기'),
+                            onPressed: () {
+                              Future<TimeOfDay?> selectedTime = showTimePicker(
+                                initialTime: TimeOfDay.now(),
+                                context: context,
+                              );
+                              selectedTime.then((time) {
+                                setState(() {
+                                  _selectedTime = time;
+                                });
+                                print('선택되었습니다');
+                              });
+                            },
+                          ),
                         if (_selectedTime != null)
                           Text(
                             '${_selectedTime!.hour}:${_selectedTime!.minute}',
@@ -254,3 +331,5 @@ class _MyHomePage extends State<StatefulWidget> {
     );
   }
 }
+
+
