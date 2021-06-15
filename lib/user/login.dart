@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:double_fresh/home/home.dart';
+import 'package:double_fresh/home/calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -88,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                           if (_res.body.toString() == 'true') {
                             Navigator.push(
                               context,
-                              CustomRoute(builder: (context) => HomePage()),
+                              CustomRoute(builder: (context) => Calendar()),
                             );
                           } else {
                             loginFailAlert(context, _res.body);
