@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:double_fresh/home/calendar.dart';
+import 'package:double_fresh/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -85,10 +86,13 @@ class _LoginPageState extends State<LoginPage> {
                               },
                               body: body);
                           print(_res.body);
-                          if (_res.body.toString() == 'true') {
+                          if (_res.body.toString()[0] == '{') {
+                            Map<String, dynamic> jsonMap = jsonDecode(_res.body);
+                            var fromJson = User.fromJson(jsonMap);
+
                             Navigator.push(
                               context,
-                              CustomRoute(builder: (context) => Calendar()),
+                              CustomRoute(builder: (context) => Calendar(fromJson)),
                             );
                           } else {
                             loginFailAlert(context, _res.body);

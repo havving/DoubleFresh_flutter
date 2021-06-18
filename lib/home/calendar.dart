@@ -1,11 +1,18 @@
-import 'package:flutter/material.dart';
 import 'package:cell_calendar/cell_calendar.dart';
+import 'package:double_fresh/model/user.dart';
+import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+
 import 'calendar_event.dart';
+import 'dialog/PasswordModifyDialog.dart';
 import 'dialog/pickupDateDialog.dart';
 
 class Calendar extends StatefulWidget {
+  User fromJson;
+
+  Calendar(this.fromJson);
+
   // Calendar({Key? key, required this.title}) : super(key: key);
   // final String title;
 
@@ -23,10 +30,14 @@ class Calendar extends StatefulWidget {
   }*/
 
   @override
-  State<StatefulWidget> createState() => _MyHomePage();
+  State<StatefulWidget> createState() => _MyHomePage(fromJson: fromJson);
 }
 
 class _MyHomePage extends State<StatefulWidget> {
+  late User fromJson;
+
+  _MyHomePage({required this.fromJson});
+
   TimeOfDay? _selectedTime;
 
   @override
@@ -50,7 +61,7 @@ class _MyHomePage extends State<StatefulWidget> {
             padding: EdgeInsets.zero,
             children: <Widget>[
               UserAccountsDrawerHeader(
-                accountName: Text("황혜빈 님"),
+                accountName: Text('안녕하세요, ' + fromJson.name + '님!'),
                 accountEmail: Text("6월 정기구독 중"),
                 currentAccountPicture: CircleAvatar(
                   backgroundColor: Colors.white,
@@ -79,36 +90,11 @@ class _MyHomePage extends State<StatefulWidget> {
                     ),
                     title: Text('비밀번호 변경하기'),
                     onTap: () => showDialog(
-                      barrierDismissible: false,
-                      context: context,
-                      builder: (_) => AlertDialog(
-                        title: Text('비밀번호 변경하기'),
-                        content: SingleChildScrollView(
-                          child: ListBody(
-                            children: <Widget>[
-                              TextField(
-                                decoration:
-                                    InputDecoration(labelText: '새 비밀번호'),
-                              ),
-                            ],
-                          ),
-                        ),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text('닫기'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                          FlatButton(
-                            child: Text('확인'),
-                            onPressed: () {
-                              // TODO 비밀번호 변경
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (_) {
+                          return PasswordModifyDialog(fromJson.id);
+                        }),
                   ),
                 ],
               ),
@@ -331,5 +317,3 @@ class _MyHomePage extends State<StatefulWidget> {
     );
   }
 }
-
-
