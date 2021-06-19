@@ -79,7 +79,7 @@ class _PasswordModifyState extends State<PasswordModifyDialog> {
         FlatButton(
           child: Text('OK'),
           onPressed: () {
-            Navigator.of(context, rootNavigator: true).pop(result);
+            Navigator.of(context, rootNavigator: true).pop(/*result*/);
           },
         ),
       ],
