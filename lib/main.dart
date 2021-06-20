@@ -4,8 +4,6 @@ import 'package:double_fresh/user/login.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import 'home/calendar.dart';
-
 void main() {
   runApp(MaterialApp(home: LoginPage()));
 }

@@ -7,8 +7,9 @@ import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
 import 'calendar_event.dart';
-import 'dialog/passwordModifyDialog.dart';
-import 'dialog/pickupDateDialog.dart';
+import 'dialog/password_modify_dialog.dart';
+import 'dialog/pickup_date_dialog.dart';
+import 'dialog/request_modify_dialog.dart';
 
 class Calendar extends StatefulWidget {
   User fromJson;
@@ -42,7 +43,9 @@ class _MyHomePage extends State<StatefulWidget> {
 
   late String _selectedTime;
 
-  final _scheduleTimeUrl = Uri.parse('http://192.168.0.22:3000/schedule_time');
+  final _pickupTimeUrl = Uri.parse('http://192.168.0.22:3000/pickup_time');
+  final _fixedPickupTimeUrl =
+      Uri.parse('http://192.168.0.22:3000/fixed_pickup_time');
 
   @override
   Widget build(BuildContext context) {
@@ -93,13 +96,12 @@ class _MyHomePage extends State<StatefulWidget> {
                       color: Colors.grey[850],
                     ),
                     title: Text('비밀번호 변경하기'),
-                    onTap: () =>
-                        showDialog(
-                            barrierDismissible: false,
-                            context: context,
-                            builder: (_) {
-                              return PasswordModifyDialog(fromJson.id);
-                            }),
+                    onTap: () => showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (_) {
+                          return PasswordModifyDialog(fromJson.id);
+                        }),
                   ),
                 ],
               ),
@@ -116,13 +118,12 @@ class _MyHomePage extends State<StatefulWidget> {
                       color: Colors.grey[850],
                     ),
                     title: Text('픽업 날짜 고정하기'),
-                    onTap: () =>
-                        showDialog(
-                            barrierDismissible: false,
-                            context: context,
-                            builder: (_) {
-                              return PickupDateDialog();
-                            }),
+                    onTap: () => showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (_) {
+                          return PickupDateDialog(fromJson.id);
+                        }),
                   ),
                   ListTile(
                     leading: Icon(
@@ -135,11 +136,25 @@ class _MyHomePage extends State<StatefulWidget> {
                         initialTime: TimeOfDay.now(),
                         context: context,
                       );
-                      selectedTime.then((time) {
+                      selectedTime.then((time) async {
                         setState(() {
-                          // _selectedTime = time;
+                          _selectedTime = '${time!.hour}:${time.minute}';
                         });
-                        print('선택되었습니다');
+                        print(_selectedTime);
+
+                        var data = {
+                          "id": fromJson.id,
+                          "time": _selectedTime,
+                        };
+                        var body = json.encode(data);
+                        http.Response _res = await http.put(_fixedPickupTimeUrl,
+                            headers: {
+                              "Content-Type": "application/json",
+                              "Access-Control-Allow-Origin": "*"
+                            },
+                            body: body);
+                        pickupTimeAlert(context, _res.body);
+                        // TODO 2개의 팝업창을 동시에 CLOSE 하는 방법?
                       });
                     },
                   ),
@@ -149,39 +164,12 @@ class _MyHomePage extends State<StatefulWidget> {
                       color: Colors.grey[850],
                     ),
                     title: Text('요청사항 수정하기'),
-                    onTap: () =>
-                        showDialog(
-                          barrierDismissible: false,
-                          context: context,
-                          builder: (_) =>
-                              AlertDialog(
-                                title: Text('요청사항 수정하기'),
-                                content: SingleChildScrollView(
-                                  child: ListBody(
-                                    children: <Widget>[
-                                      TextField(
-                                        decoration:
-                                        InputDecoration(labelText: '요청사항 입력'),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                actions: <Widget>[
-                                  FlatButton(
-                                    child: Text('닫기'),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                  FlatButton(
-                                    child: Text('확인'),
-                                    onPressed: () {
-                                      // TODO 요청사항 확인
-                                    },
-                                  ),
-                                ],
-                              ),
-                        ),
+                    onTap: () => showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (_) {
+                          return RequestModifyDialog(fromJson.id);
+                        }),
                   ),
                 ],
               ),
@@ -262,8 +250,7 @@ class _MyHomePage extends State<StatefulWidget> {
             showDialog(
                 barrierDismissible: false,
                 context: context,
-                builder: (_) =>
-                    AlertDialog(
+                builder: (_) => AlertDialog(
                       title: Text(date.month.monthName +
                           '월 ' +
                           date.day.toString() +
@@ -272,8 +259,7 @@ class _MyHomePage extends State<StatefulWidget> {
                         mainAxisSize: MainAxisSize.min,
                         children: eventsOnTheDate
                             .map(
-                              (event) =>
-                              Container(
+                              (event) => Container(
                                 width: double.infinity,
                                 padding: EdgeInsets.all(4),
                                 margin: EdgeInsets.only(bottom: 12),
@@ -283,7 +269,7 @@ class _MyHomePage extends State<StatefulWidget> {
                                   style: TextStyle(color: event.eventTextColor),
                                 ),
                               ),
-                        )
+                            )
                             .toList(),
                       ),
                       actions: <Widget>[
@@ -294,9 +280,7 @@ class _MyHomePage extends State<StatefulWidget> {
                           },
                         ),
                         // 오늘 이후의 날짜만 '예약하기' 가능
-                        if (DateTime
-                            .now()
-                            .day <= date.day)
+                        if (DateTime.now().day <= date.day)
                           FlatButton(
                             child: Text('예약하기'),
                             // onPressed: () => ScheduleTimeDialog(fromJson.id, date.day),
@@ -308,9 +292,8 @@ class _MyHomePage extends State<StatefulWidget> {
                               selectedTime.then((time) async {
                                 setState(() {
                                   _selectedTime =
-                                  '${time!.hour}:${time.minute}';
+                                      '${time!.hour}:${time.minute}';
                                 });
-                                print('선택되었습니다');
                                 print(_selectedTime);
 
                                 var data = {
@@ -319,14 +302,14 @@ class _MyHomePage extends State<StatefulWidget> {
                                   "time": _selectedTime,
                                 };
                                 var body = json.encode(data);
-                                http.Response _res = await http.post(
-                                    _scheduleTimeUrl,
+                                http.Response _res = await http.put(
+                                    _pickupTimeUrl,
                                     headers: {
                                       "Content-Type": "application/json",
                                       "Access-Control-Allow-Origin": "*"
                                     },
                                     body: body);
-                                schedulerTimeAlert(context, _res.body);
+                                pickupTimeAlert(context, _res.body);
                                 // TODO 2개의 팝업창을 동시에 CLOSE 하는 방법?
                               });
                             },
@@ -343,8 +326,8 @@ class _MyHomePage extends State<StatefulWidget> {
     );
   }
 
-  /// 예약 팝업
-  void schedulerTimeAlert(BuildContext context, text) {
+  /// 픽업 시간 팝업
+  void pickupTimeAlert(BuildContext context, text) {
     var alert = AlertDialog(
       content: SingleChildScrollView(
         child: ListBody(

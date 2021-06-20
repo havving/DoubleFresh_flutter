@@ -3,37 +3,36 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class PasswordModifyDialog extends StatefulWidget {
+class RequestModifyDialog extends StatefulWidget {
   int id;
-  PasswordModifyDialog(this.id);
+  RequestModifyDialog(this.id);
 
   @override
-  _PasswordModifyState createState() => new _PasswordModifyState(this.id);
+  _RequestModifyState createState() => new _RequestModifyState(this.id);
 }
 
-class _PasswordModifyState extends State<PasswordModifyDialog> {
+class _RequestModifyState extends State<RequestModifyDialog> {
 
-  final _newPasswordController = TextEditingController();
-  final _pwModifyUrl = Uri.parse('http://192.168.0.22:3000/user/pw_modify');
+  final _requestController = TextEditingController();
+  final _requestModifyUrl = Uri.parse('http://192.168.0.22:3000/user/request_modify');
 
   final int id;
 
-  _PasswordModifyState(this.id);
+  _RequestModifyState(this.id);
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('비밀번호 변경하기'),
+      title: Text('요청사항 수정하기'),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
             TextField(
-              controller: _newPasswordController,
+              controller: _requestController,
               decoration:
               InputDecoration(
-                  labelText: '새 비밀번호'
+                  labelText: '요청사항 입력'
               ),
-              obscureText: true,
             ),
           ],
         ),
@@ -50,16 +49,16 @@ class _PasswordModifyState extends State<PasswordModifyDialog> {
           onPressed: () async {
             var data = {
               "id": id,
-              "newPassword": _newPasswordController.text,
+              "request": _requestController.text,
             };
             var body = json.encode(data);
-            http.Response _res = await http.put(_pwModifyUrl,
+            http.Response _res = await http.put(_requestModifyUrl,
                 headers: {
                   "Content-Type": "application/json",
                   "Access-Control-Allow-Origin": "*"
                 },
                 body: body);
-            pwModifyAlert(context, _res.body);
+            requestModifyAlert(context, _res.body);
             // TODO 2개의 팝업창을 동시에 CLOSE 하는 방법?
           },
         ),
@@ -67,8 +66,8 @@ class _PasswordModifyState extends State<PasswordModifyDialog> {
     );
   }
 
-  /// 비밀번호 변경 팝업
-  void pwModifyAlert(BuildContext context, text) {
+  /// 요청사항 수정 팝업
+  void requestModifyAlert(BuildContext context, text) {
     var alert = AlertDialog(
       content: SingleChildScrollView(
         child: ListBody(
