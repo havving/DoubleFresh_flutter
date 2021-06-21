@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:cell_calendar/cell_calendar.dart';
+import 'package:double_fresh/home/pickup_view.dart';
 import 'package:double_fresh/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
+import '../main.dart';
 import 'calendar_event.dart';
 import 'dialog/password_modify_dialog.dart';
 import 'dialog/pickup_date_dialog.dart';
@@ -51,6 +53,11 @@ class _MyHomePage extends State<StatefulWidget> {
   Widget build(BuildContext context) {
     final _sampleEvents = sampleEvents();
     final cellCalendarPageController = CellCalendarPageController();
+
+    String userId = fromJson.id.toString();
+    final _subscriptionUrl = Uri.http(
+        'http://192.168.0.22:3000/user/subscription/', userId);
+
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.lightGreen),
       home: Scaffold(
@@ -90,6 +97,25 @@ class _MyHomePage extends State<StatefulWidget> {
                   '내 정보',
                 ),
                 children: <Widget>[
+                  ListTile(
+                    leading: Icon(
+                      Icons.book_outlined,
+                      color: Colors.grey[850],
+                    ),
+                    title: Text('픽업 현황 보기'),
+                    onTap: () async {
+                      http.Response _res = await http.get(_subscriptionUrl,
+                          headers: {
+                            "Content-Type": "application/json",
+                            "Access-Control-Allow-Origin": "*"
+                          });
+                      
+                      Navigator.push(
+                        context,
+                        CustomRoute(builder: (context) => PickupView()),
+                      );
+                    },
+                  ),
                   ListTile(
                     leading: Icon(
                       Icons.lock_outline,

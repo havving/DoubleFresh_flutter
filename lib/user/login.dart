@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:double_fresh/home/admin_page.dart';
+import 'package:double_fresh/admin/admin_page.dart';
 import 'package:double_fresh/home/calendar.dart';
 import 'package:double_fresh/model/user.dart';
 import 'package:flutter/material.dart';
