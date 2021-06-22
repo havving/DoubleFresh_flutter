@@ -1,14 +1,20 @@
-import 'dart:convert';
-
+import 'package:double_fresh/model/subscription.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
-class PickupView extends StatefulWidget {
+class PickupViewPage extends StatefulWidget {
+  Subscription subJson;
+
+  PickupViewPage(this.subJson);
+
   @override
-  State<StatefulWidget> createState() => _PickupView();
+  State<StatefulWidget> createState() => _PickupView(subJson: subJson);
 }
 
 class _PickupView extends State<StatefulWidget> {
+  late Subscription subJson;
+
+  _PickupView({required this.subJson});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,7 +24,7 @@ class _PickupView extends State<StatefulWidget> {
           title: Text('내 픽업 현황'),
         ),
         body: Center(
-            child: Text(''),
+          child: Text(''),
         ),
       ),
     );

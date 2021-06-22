@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:cell_calendar/cell_calendar.dart';
+import 'package:double_fresh/home/pickup_null.dart';
 import 'package:double_fresh/home/pickup_view.dart';
+import 'package:double_fresh/model/subscription.dart';
 import 'package:double_fresh/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -55,8 +57,8 @@ class _MyHomePage extends State<StatefulWidget> {
     final cellCalendarPageController = CellCalendarPageController();
 
     String userId = fromJson.id.toString();
-    final _subscriptionUrl = Uri.http(
-        'http://192.168.0.22:3000/user/subscription/', userId);
+    final _subscriptionUrl = Uri.parse(
+        'http://192.168.0.22:3000/user/subscription/');
 
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.lightGreen),
@@ -104,16 +106,29 @@ class _MyHomePage extends State<StatefulWidget> {
                     ),
                     title: Text('픽업 현황 보기'),
                     onTap: () async {
-                      http.Response _res = await http.get(_subscriptionUrl,
+                      var data = {
+                        "id": fromJson.id,
+                      };
+                      var body = json.encode(data);
+                      http.Response _res = await http.post(_subscriptionUrl,
                           headers: {
                             "Content-Type": "application/json",
                             "Access-Control-Allow-Origin": "*"
-                          });
-                      
-                      Navigator.push(
-                        context,
-                        CustomRoute(builder: (context) => PickupView()),
-                      );
+                          },
+                      body: body);
+                      if (_res.body.toString()[0] == '{') {
+                        Map<String, dynamic> jsonMap = jsonDecode(_res.body);
+                        var subJson = Subscription.fromJson(jsonMap);
+                        Navigator.push(
+                          context,
+                          CustomRoute(builder: (context) => PickupViewPage(subJson)),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          CustomRoute(builder: (context) => PickupNullPage()),
+                        );
+                      }
                     },
                   ),
                   ListTile(
