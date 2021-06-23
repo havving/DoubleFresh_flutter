@@ -20,24 +20,9 @@ class Calendar extends StatefulWidget {
 
   Calendar(this.fromJson);
 
-  // Calendar({Key? key, required this.title}) : super(key: key);
-  // final String title;
-
-  // This widget is the root of your application.
-/*  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Double_Fresh',
-      theme: ThemeData(
-        primarySwatch: Colors.lightGreen,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      // home: MyHomePage(title: '이달의 샐러드'),
-    );
-  }*/
-
   @override
   State<StatefulWidget> createState() => _MyHomePage(fromJson: fromJson);
+
 }
 
 class _MyHomePage extends State<StatefulWidget> {
@@ -121,12 +106,12 @@ class _MyHomePage extends State<StatefulWidget> {
                         var subJson = Subscription.fromJson(jsonMap);
                         Navigator.push(
                           context,
-                          CustomRoute(builder: (context) => PickupViewPage(subJson)),
+                          MaterialPageRoute(builder: (context) => PickupViewPage(subJson)),
                         );
                       } else {
                         Navigator.push(
                           context,
-                          CustomRoute(builder: (context) => PickupNullPage()),
+                          MaterialPageRoute(builder: (context) => PickupNullPage()),
                         );
                       }
                     },

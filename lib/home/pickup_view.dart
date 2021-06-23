@@ -17,15 +17,18 @@ class _PickupView extends State<StatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.lightGreen),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('내 픽업 현황'),
-        ),
-        body: Center(
-          child: Text(''),
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("내 픽업 현황"),
+        backgroundColor: Colors.lightGreen,
+      ),
+      body: Row(
+       children: [
+         Text('6월 주 ' + subJson.subWeekCount.toString() + '회 구독중'),
+         Text('총 ' + subJson.pickupTotalCount.toString() + '중' +
+         subJson.pickupCount.toString() + '번 이용했습니다.'),
+         Text(subJson.pickupRemainCount.toString() + '번 남았습니다.'),
+       ], 
       ),
     );
   }
