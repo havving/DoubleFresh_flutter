@@ -22,13 +22,35 @@ class _PickupView extends State<StatefulWidget> {
         title: Text("내 픽업 현황"),
         backgroundColor: Colors.lightGreen,
       ),
-      body: Row(
-       children: [
-         Text('6월 주 ' + subJson.subWeekCount.toString() + '회 구독중'),
-         Text('총 ' + subJson.pickupTotalCount.toString() + '중' +
-         subJson.pickupCount.toString() + '번 이용했습니다.'),
-         Text(subJson.pickupRemainCount.toString() + '번 남았습니다.'),
-       ], 
+      body: Column(
+        children: <Widget>[
+          Text('6월 주 ' + subJson.subWeekCount.toString() + '회 구독중'),
+          Text('총 ' +
+              subJson.pickupTotalCount.toString() +
+              '중' +
+              subJson.pickupCount.toString() +
+              '번 이용했습니다.'),
+          Text(subJson.pickupRemainCount.toString() + '번 남았습니다.'),
+          DataTable(
+            columns: [
+              DataColumn(label: Text('샐러드')),
+              DataColumn(label: Text('예약 날짜')),
+              DataColumn(label: Text('예약 시간')),
+            ],
+            rows: [
+              DataRow(cells: [
+                DataCell(Text('A1')),
+                DataCell(Text('B1')),
+                DataCell(Text('B1')),
+              ]),
+              DataRow(cells: [
+                DataCell(Text('A2')),
+                DataCell(Text('B2')),
+                DataCell(Text('B2')),
+              ]),
+            ],
+          )
+        ],
       ),
     );
   }
