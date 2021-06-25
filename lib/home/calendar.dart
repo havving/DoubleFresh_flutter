@@ -36,6 +36,8 @@ class _MyHomePage extends State<StatefulWidget> {
   final _fixedPickupTimeUrl =
       Uri.parse('http://192.168.0.22:3000/fixed_pickup_time');
 
+  late String saladName;
+
   @override
   Widget build(BuildContext context) {
     final _sampleEvents = sampleEvents();
@@ -291,7 +293,7 @@ class _MyHomePage extends State<StatefulWidget> {
                                 margin: EdgeInsets.only(bottom: 12),
                                 color: event.eventBackgroundColor,
                                 child: Text(
-                                  event.eventName,
+                                  saladName = event.eventName,
                                   style: TextStyle(color: event.eventTextColor),
                                 ),
                               ),
@@ -326,6 +328,7 @@ class _MyHomePage extends State<StatefulWidget> {
                                   "id": fromJson.id,
                                   "day": date.day,
                                   "time": _selectedTime,
+                                  "salad": saladName,
                                 };
                                 var body = json.encode(data);
                                 http.Response _res = await http.put(

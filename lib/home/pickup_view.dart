@@ -1,3 +1,4 @@
+import 'package:double_fresh/model/pickup_info.dart';
 import 'package:double_fresh/model/subscription.dart';
 import 'package:flutter/material.dart';
 
@@ -15,8 +16,14 @@ class _PickupView extends State<StatefulWidget> {
 
   _PickupView({required this.subJson});
 
+  Iterable<PickupInfo> list = List<PickupInfo>
+      .from(subJson.pickupInfo).map((x) => PickupInfo.fromJson(x)););
+
+  late List<PickupInfo> pickupInfo = subJson.pickupInfo.cast<PickupInfo>();
+
   @override
   Widget build(BuildContext context) {
+    print(pickupInfo);
     return Scaffold(
       appBar: AppBar(
         title: Text("내 픽업 현황"),
@@ -31,27 +38,46 @@ class _PickupView extends State<StatefulWidget> {
               subJson.pickupCount.toString() +
               '번 이용했습니다.'),
           Text(subJson.pickupRemainCount.toString() + '번 남았습니다.'),
-          DataTable(
-            columns: [
-              DataColumn(label: Text('샐러드')),
-              DataColumn(label: Text('예약 날짜')),
-              DataColumn(label: Text('예약 시간')),
-            ],
-            rows: [
-              DataRow(cells: [
-                DataCell(Text('A1')),
-                DataCell(Text('B1')),
-                DataCell(Text('B1')),
-              ]),
-              DataRow(cells: [
-                DataCell(Text('A2')),
-                DataCell(Text('B2')),
-                DataCell(Text('B2')),
-              ]),
-            ],
-          )
+          // Text(pickupInfo[0].day.toString() + pickupInfo[0].time.toString() + pickupInfo[0].salad),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: SingleChildScrollView(
+              // child: _getDataTable(),
+            ),
+          ),
         ],
       ),
     );
   }
+
+  /// 표 데이터 값
+  /*Widget _getDataTable() {
+    return DataTable(
+      horizontalMargin: 12.0,
+      columnSpacing: 28.0,
+      columns: _getColumns(),
+      rows: _getRows(),
+    );
+  }
+
+  void _dataColumnSort(int columnIndex, bool ascending) {
+    print('_dataColumnSort() $columnIndex $ascending');
+  }
+
+  /// columns
+  List<DataColumn> _getColumns() {
+    List<DataColumn> dataColumn = [];
+    for (var i in ) {
+      dataColumn.add(DataColumn(label: Text(i), numeric: true, onSort: _dataColumnSort));
+    }
+  }
+
+  List<DataRow> _getRows() {
+    List<DataRow> dataRow = [];
+    for (var i = 0; i < ; i++) {
+
+    }
+  }*/
+
+
 }
