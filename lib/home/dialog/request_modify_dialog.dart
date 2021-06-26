@@ -14,7 +14,7 @@ class RequestModifyDialog extends StatefulWidget {
 class _RequestModifyState extends State<RequestModifyDialog> {
 
   final _requestController = TextEditingController();
-  final _requestModifyUrl = Uri.parse('http://192.168.0.22:3000/user/request_modify');
+  final _requestModifyUrl = Uri.parse('http://192.168.0.22:3000/request_modify');
 
   final int id;
 

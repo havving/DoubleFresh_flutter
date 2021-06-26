@@ -1,17 +1,17 @@
 class PickupInfo {
-  final int id;
+  final int subscriptionDetailId;
   final int day;
-  final DateTime time;
+  final String time;
   final String salad;
 
-  PickupInfo(this.id, this.day, this.time, this.salad);
+  PickupInfo(this.subscriptionDetailId, this.day, this.time, this.salad);
 
   PickupInfo.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
+      : subscriptionDetailId = json['subscriptionDetailId'],
         day = json['day'],
         time = json['time'],
         salad = json['salad'];
 
   Map<String, dynamic> toJson() =>
-      {'id': id, 'day': day, 'time': time, 'salad': salad};
+      {'subscriptionDetailId': subscriptionDetailId, 'day': day, 'time': time, 'salad': salad};
 }

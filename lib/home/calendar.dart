@@ -45,7 +45,7 @@ class _MyHomePage extends State<StatefulWidget> {
 
     String userId = fromJson.id.toString();
     final _subscriptionUrl = Uri.parse(
-        'http://192.168.0.22:3000/user/subscription/');
+        'http://192.168.0.22:3000/subscription/');
 
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.lightGreen),
@@ -311,7 +311,6 @@ class _MyHomePage extends State<StatefulWidget> {
                         if (DateTime.now().day <= date.day)
                           FlatButton(
                             child: Text('예약하기'),
-                            // onPressed: () => ScheduleTimeDialog(fromJson.id, date.day),
                             onPressed: () {
                               Future<TimeOfDay?> selectedTime = showTimePicker(
                                 initialTime: TimeOfDay.now(),
