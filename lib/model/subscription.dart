@@ -1,5 +1,3 @@
-import 'package:double_fresh/model/pickup_info.dart';
-
 class Subscription {
   final int id;
   final int subWeekCount;

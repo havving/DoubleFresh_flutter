@@ -24,7 +24,7 @@ class _PickupView extends State<StatefulWidget> {
   late String _selectedTime;
 
   final _pickupCancelUrl = Uri.parse('http://192.168.0.22:3000/pickup_cancel');
-  final _pickupTimeUrl = Uri.parse('http://192.168.0.22:3000/pickup_time');
+  final _pickupTimeModifyUrl = Uri.parse('http://192.168.0.22:3000/pickup_time_modify');
 
   @override
   void initState() {
@@ -55,10 +55,11 @@ class _PickupView extends State<StatefulWidget> {
 
   /// rows
   List<DataRow> _getRows() {
-    List<DataRow> dataRow = [];
     List<DataCell> cells = [];
+    List<DataRow> dataRow = [];
     if (pickupList.length > 0) {
       for (var i = 0; i < pickupList.length; i++) {
+        List<DataCell> cells = [];
         cells.add(DataCell(Text((i + 1).toString())));
         cells.add(DataCell(Text(pickupList[i].salad)));
         cells.add(DataCell(Text(pickupList[i].day.toString())));
@@ -78,8 +79,7 @@ class _PickupView extends State<StatefulWidget> {
               "time": _selectedTime,
             };
             var body = json.encode(data);
-            http.Response _res = await http.put(
-                _pickupTimeUrl,
+            http.Response _res = await http.put(_pickupTimeModifyUrl,
                 headers: {
                   "Content-Type": "application/json",
                   "Access-Control-Allow-Origin": "*"
@@ -102,13 +102,14 @@ class _PickupView extends State<StatefulWidget> {
               body: body);
           pickupTimeAlert(context, _res.body);
         }));
+        dataRow.add(DataRow(cells: cells));
       }
     } else {
       for (var i in headingRow) {
         cells.add(DataCell(Text('-')));
       }
+      dataRow.add(DataRow(cells: cells));
     }
-    dataRow.add(DataRow(cells: cells));
 
     return dataRow;
   }
@@ -125,7 +126,7 @@ class _PickupView extends State<StatefulWidget> {
           Text('6월 주 ' + subJson.subWeekCount.toString() + '회 구독중'),
           Text('총 ' +
               subJson.pickupTotalCount.toString() +
-              '중' +
+              '번 중 ' +
               subJson.pickupCount.toString() +
               '번 이용했습니다.'),
           Text(subJson.pickupRemainCount.toString() + '번 남았습니다.'),

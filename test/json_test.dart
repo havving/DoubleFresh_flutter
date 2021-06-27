@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:double_fresh/model/user.dart';
 
 void main() {
-  var user = User(1111, "1111", "Jin", 13132424);
+  var user = User(1111, "1111", "Jin", 13132424, '1');
   var toJson = user.toJson();
   print('${toJson['id']}');
   print('${toJson['password']}');

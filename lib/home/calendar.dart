@@ -43,7 +43,6 @@ class _MyHomePage extends State<StatefulWidget> {
     final _sampleEvents = sampleEvents();
     final cellCalendarPageController = CellCalendarPageController();
 
-    String userId = fromJson.id.toString();
     final _subscriptionUrl = Uri.parse(
         'http://192.168.0.22:3000/subscription/');
 
@@ -52,12 +51,6 @@ class _MyHomePage extends State<StatefulWidget> {
       home: Scaffold(
         appBar: AppBar(
           title: Text('이달의 샐러드'),
-/*        actions: [
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () => {},
-          )
-        ],*/
         ),
         drawer: Drawer(
           child: ListView(

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'admin_home_page.dart';
+import 'admin_user_page.dart';
+
 class AdminPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _AdminPage();
@@ -13,10 +16,7 @@ class _AdminPage extends State<StatefulWidget> {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.lightGreen),
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('6월의 샐러드'),
-        ),
-        // body: getPage(),
+        body: getPage(),
         bottomNavigationBar: BottomNavigationBar(
           onTap: (index) {
             setState(() {
@@ -58,17 +58,16 @@ class _AdminPage extends State<StatefulWidget> {
     );
   }
 
-/*Widget getPage() {
-    Widget page;
+  Widget getPage() {
+    late Widget page;
     switch (_curIndex) {
       case 0:
-        // page = page1();
+        page = AdminHomePage();
         break;
       case 1:
-        // page = page2();
+        page = AdminUserPage();
         break;
     }
     return page;
-  }*/
-
+  }
 }
