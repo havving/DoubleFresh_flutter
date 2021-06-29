@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import 'admin_home_page.dart';
 import 'admin_user_page.dart';
@@ -10,6 +13,11 @@ class AdminPage extends StatefulWidget {
 
 class _AdminPage extends State<StatefulWidget> {
   int _curIndex = 0;
+  List jsonList = [];
+
+  var jsonMap;
+
+  final _adminUserInfoUrl = Uri.parse('http://192.168.0.22:3000/admin/user_info');
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +26,13 @@ class _AdminPage extends State<StatefulWidget> {
       home: Scaffold(
         body: getPage(),
         bottomNavigationBar: BottomNavigationBar(
-          onTap: (index) {
+          onTap: (index) async {
+            if (index == 1) {
+              http.Response _res = await http.get(_adminUserInfoUrl);
+              jsonMap = jsonDecode(_res.body);
+            }
             setState(() {
+              jsonList = jsonMap;
               _curIndex = index;
             });
           },
@@ -65,7 +78,7 @@ class _AdminPage extends State<StatefulWidget> {
         page = AdminHomePage();
         break;
       case 1:
-        page = AdminUserPage();
+        page = AdminUserPage(jsonList);
         break;
     }
     return page;
