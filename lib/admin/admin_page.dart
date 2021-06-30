@@ -18,6 +18,7 @@ class _AdminPage extends State<StatefulWidget> {
   var jsonMap;
 
   final _adminUserInfoUrl = Uri.parse('http://192.168.0.22:3000/admin/user_info');
+  final _adminPickupUrl = Uri.parse('http://192.168.0.22:3000/admin/pickup');
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +30,9 @@ class _AdminPage extends State<StatefulWidget> {
           onTap: (index) async {
             if (index == 1) {
               http.Response _res = await http.get(_adminUserInfoUrl);
+              jsonMap = jsonDecode(_res.body);
+            } else {
+              http.Response _res = await http.get(_adminPickupUrl);
               jsonMap = jsonDecode(_res.body);
             }
             setState(() {
@@ -75,7 +79,7 @@ class _AdminPage extends State<StatefulWidget> {
     late Widget page;
     switch (_curIndex) {
       case 0:
-        page = AdminHomePage();
+        page = AdminHomePage(jsonList);
         break;
       case 1:
         page = AdminUserPage(jsonList);
