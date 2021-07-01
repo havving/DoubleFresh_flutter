@@ -1,3 +1,4 @@
+import 'package:double_fresh/model/admin_pickup.dart';
 import 'package:flutter/material.dart';
 
 class AdminHomePage extends StatefulWidget {
@@ -22,7 +23,6 @@ class _AdminHomePage extends State<StatefulWidget> {
   @override
   void initState() {
     super.initState();
-    // TODO 이름, 예약시간, 요청사항
     headingRow = [
       '번호',
       '이름',
@@ -30,7 +30,7 @@ class _AdminHomePage extends State<StatefulWidget> {
       '요청사항',
     ];
     for (var i in jsonList) {
-      // fromJson.add(AdminUser.fromJson(i));
+      fromJson.add(AdminPickup.fromJson(i));
     }
   }
 
@@ -55,14 +55,24 @@ class _AdminHomePage extends State<StatefulWidget> {
 
   /// rows
   List<DataRow> _getRows() {
+    List<DataCell> cells = [];
     List<DataRow> dataRow = [];
 
-    for (var i = 0; i < fromJson.length; i++) {
-      List<DataCell> cells = [];
-      cells.add(DataCell(Text((i + 1).toString())));
-      cells.add(DataCell(Text(fromJson[i].id.toString())));
-      cells.add(DataCell(Text(fromJson[i].name)));
-      cells.add(DataCell(Text(fromJson[i].phone.toString())));
+    if (fromJson.length > 0) {
+      for (var i = 0; i < fromJson.length; i++) {
+        List<DataCell> cells = [];
+        cells.add(DataCell(Text((i + 1).toString())));
+        cells.add(DataCell(Text(fromJson[i].name)));
+        cells.add(DataCell(Text(fromJson[i].time)));
+        cells.add(DataCell(Text(fromJson[i].request)));
+
+        dataRow.add(DataRow(cells: cells));
+      }
+    } else {
+      for (var i in headingRow) {
+        cells.add(DataCell(Text('-')));
+      }
+      dataRow.add(DataRow(cells: cells));
     }
 
     return dataRow;
@@ -78,7 +88,12 @@ class _AdminHomePage extends State<StatefulWidget> {
         ),
         body: Column(
           children: <Widget>[
-            Text('오늘의 픽업 현황')
+            Text('오늘의 픽업 현황'),
+            SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: SingleChildScrollView(
+                  child: _getDataTable(),
+                )),
           ],
         )
       ),

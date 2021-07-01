@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class AdminUserAddDialog extends StatefulWidget {
-
   @override
-  State<StatefulWidget> createState() =>
-      _AdminUserAddState();
+  State<StatefulWidget> createState() => _AdminUserAddState();
 }
 
 class _AdminUserAddState extends State<StatefulWidget> {
+  var _statusDropdownValue;
+  var _countDropdownValue;
 
   final _idController = TextEditingController();
   final _nameController = TextEditingController();
@@ -18,6 +18,13 @@ class _AdminUserAddState extends State<StatefulWidget> {
   final _requestController = TextEditingController();
 
   final _userSignupUrl = Uri.parse('http://192.168.0.22:3000/user/signup');
+
+  @override
+  void initState() {
+    super.initState();
+    _statusDropdownValue = 'Y';
+    _countDropdownValue = '2';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +44,36 @@ class _AdminUserAddState extends State<StatefulWidget> {
             TextField(
               controller: _phoneController,
             ),
-            // TODO 추가할 것: 구독여부, 구독횟수(월), 요청사항도 입력해서 Sub/Detail 테이블에 모두 넣기
-            // TODO 총 픽업횟수는 구독횟수에 따라 switch-case문으로 보내기
             Text('구독여부'),
+            DropdownButton(
+                value: _statusDropdownValue,
+                items: ['Y', 'N']
+                    .map((value) => DropdownMenuItem(
+                          value: value,
+                          child: Text(value),
+                        ))
+                    .toList(),
+                onChanged: (newValue) {
+                  setState(() {
+                    _statusDropdownValue = newValue;
+                  });
+                },
+            ),
             Text('구독횟수'),
+            DropdownButton(
+              value: _countDropdownValue,
+              items: ['2', '3', '5']
+                  .map((value) => DropdownMenuItem(
+                value: value,
+                child: Text(value),
+              ))
+                  .toList(),
+              onChanged: (newValue) {
+                setState(() {
+                  _countDropdownValue = newValue;
+                });
+              },
+            ),
             Text('요청사항'),
             TextField(
               controller: _requestController,
@@ -62,8 +95,8 @@ class _AdminUserAddState extends State<StatefulWidget> {
               "id": _idController.text,
               "name": _nameController.text,
               "phone": _phoneController.text,
-              "status": _phoneController.text,
-
+              "status": _statusDropdownValue,
+              "count": _countDropdownValue,
               "request": _requestController.text,
             };
             var body = json.encode(data);

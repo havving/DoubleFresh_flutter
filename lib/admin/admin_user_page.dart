@@ -23,6 +23,8 @@ class _AdminUserPage extends State<StatefulWidget> {
   late List<dynamic> jsonList;
   var fromJson = [];
 
+  int selectedIndex = -1;
+
   final _adminUserInfoUrl ='http://192.168.0.22:3000/admin/user_info_detail/';
 
   _AdminUserPage({required this.jsonList});
@@ -35,6 +37,8 @@ class _AdminUserPage extends State<StatefulWidget> {
       'ID',
       '이름',
       '휴대폰번호',
+      '구독 여부',
+      '상세정보'
     ];
     for (var i in jsonList) {
       fromJson.add(AdminUser.fromJson(i));
@@ -44,6 +48,11 @@ class _AdminUserPage extends State<StatefulWidget> {
   /// 표 데이터 값
   Widget _getDataTable() {
     return DataTable(
+      onSelectAll: (val) {
+        setState(() {
+          selectedIndex = -1;
+        });
+      },
       horizontalMargin: 12.0,
       columnSpacing: 28.0,
       columns: _getColumns(),
@@ -63,7 +72,6 @@ class _AdminUserPage extends State<StatefulWidget> {
   /// rows
   List<DataRow> _getRows() {
     List<DataRow> dataRow = [];
-    int selectedIndex = -1;
 
     for (var i = 0; i < fromJson.length; i++) {
       List<DataCell> cells = [];
@@ -71,27 +79,30 @@ class _AdminUserPage extends State<StatefulWidget> {
       cells.add(DataCell(Text(fromJson[i].id.toString())));
       cells.add(DataCell(Text(fromJson[i].name)));
       cells.add(DataCell(Text(fromJson[i].phone.toString())));
+      cells.add(DataCell(Text(fromJson[i].status)));
+      cells.add(DataCell(Icon(Icons.open_in_new), onTap: () async {
+        var url = _adminUserInfoUrl + fromJson[i].id.toString();
+        http.Response _res = await http.get(Uri.parse(url));
+        Map<String, dynamic> jsonMap = jsonDecode(_res.body);
+        var subJson = Subscription_Detail.fromJson(jsonMap);
+
+        showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (_) {
+              return AdminUserDialog(fromJson[i].id, fromJson[i].name, subJson);
+            });
+      }));
 
       dataRow.add(DataRow(
           cells: cells,
+          selected: i == selectedIndex,
           onSelectChanged: (val) async {
             // TODO checkbox
             setState(() {
               selectedIndex = i;
             });
             print('row ' + i.toString());
-
-            var url = _adminUserInfoUrl + fromJson[i].id.toString();
-            http.Response _res = await http.get(Uri.parse(url));
-            Map<String, dynamic> jsonMap = jsonDecode(_res.body);
-            var subJson = Subscription_Detail.fromJson(jsonMap);
-
-            showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (_) {
-                  return AdminUserDialog(fromJson[i].id, fromJson[i].name, subJson);
-                });
           }));
     }
 
@@ -127,7 +138,8 @@ class _AdminUserPage extends State<StatefulWidget> {
                     }),
                 RaisedButton(
                     child: Text('사용자 삭제'),
-                    onPressed: () {
+                    onPressed: () async {
+
 
                     }),
               ],
