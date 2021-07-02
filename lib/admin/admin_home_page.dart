@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:calendar_strip/calendar_strip.dart';
 import 'package:double_fresh/model/admin_pickup.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class AdminHomePage extends StatefulWidget {
   List<dynamic> jsonList;
@@ -15,10 +19,72 @@ class _AdminHomePage extends State<StatefulWidget> {
   late List<dynamic> jsonList;
   var fromJson = [];
 
+  final _adminPickupUrl = 'http://192.168.0.22:3000/admin/pickup/';
+
   _AdminHomePage({required this.jsonList});
 
-  // TODO 꼭 DataTable로 해야할까?
-  // TODO 캘린더 라이브러리로 할 수 있지 않을까? <- 찾아보기
+  /// Calendar
+  DateTime startDate = DateTime.now().subtract(Duration(days: 2));
+  DateTime endDate = DateTime.now().add(Duration(days: 2));
+  DateTime selectedDate = DateTime.now().subtract(Duration(days: 0));
+
+  onSelect(data) async {
+    print("Selected Date -> $data");
+    var url = _adminPickupUrl + data.day.toString();
+    http.Response _res = await http.get(Uri.parse(url));
+    jsonList = jsonDecode(_res.body);
+    for (var i in jsonList) {
+      fromJson.add(AdminPickup.fromJson(i));
+    }
+  }
+
+  onWeekSelect(data) {
+    print("Selected week starting at -> $data");
+  }
+
+  _monthNameWidget(monthName) {
+    return Container(
+      child: Text(
+        monthName,
+        style: TextStyle(
+          fontSize: 17,
+          fontWeight: FontWeight.w600,
+          color: Colors.black87,
+          fontStyle: FontStyle.italic,
+        ),
+      ),
+      padding: EdgeInsets.only(top: 8, bottom: 4),
+    );
+  }
+
+  dateTileBuilder(
+      date, selectedDate, rowIndex, dayName, isDateMarked, isDateOutOfRange) {
+    bool isSelectedDate = date.compareTo(selectedDate) == 0;
+    Color fontColor = isDateOutOfRange ? Colors.black26 : Colors.black87;
+    TextStyle normalStyle =
+        TextStyle(fontSize: 17, fontWeight: FontWeight.w800, color: fontColor);
+    TextStyle selectedStyle = TextStyle(
+        fontSize: 17, fontWeight: FontWeight.w800, color: Colors.black87);
+    TextStyle dayNameStyle = TextStyle(fontSize: 14.5, color: fontColor);
+    List<Widget> _children = [
+      Text(dayName, style: dayNameStyle),
+      Text(date.day.toString(),
+          style: !isSelectedDate ? normalStyle : selectedStyle),
+    ];
+
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 150),
+      alignment: Alignment.center,
+      padding: EdgeInsets.only(top: 8, left: 5, right: 5, bottom: 5),
+      decoration: BoxDecoration(
+        color: !isSelectedDate ? Colors.transparent : Colors.white70,
+        borderRadius: BorderRadius.all(Radius.circular(60)),
+      ),
+      child: Column(
+        children: _children,
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -86,16 +152,33 @@ class _AdminHomePage extends State<StatefulWidget> {
         appBar: AppBar(
           title: Text('픽업 관리'),
         ),
-        body: Column(
+        body: Row(
           children: <Widget>[
-            Text('오늘의 픽업 현황'),
-            SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: SingleChildScrollView(
-                  child: _getDataTable(),
+            Expanded(child: Column(
+              children: <Widget>[
+                Container(
+                    child: CalendarStrip(
+                  startDate: startDate,
+                  endDate: endDate,
+                  selectedDate: selectedDate,
+                  onDateSelected: onSelect,
+                  onWeekSelected: onWeekSelect,
+                  dateTileBuilder: dateTileBuilder,
+                  iconColor: Colors.black87,
+                  monthNameWidget: _monthNameWidget,
+                  containerDecoration:
+                      BoxDecoration(color: Colors.lightGreen[200]),
+                  addSwipeGesture: true,
                 )),
+                SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: SingleChildScrollView(
+                      child: _getDataTable(),
+                    )),
+              ],
+            ))
           ],
-        )
+        ),
       ),
     );
   }

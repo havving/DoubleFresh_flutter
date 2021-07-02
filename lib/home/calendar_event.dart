@@ -2,14 +2,14 @@ import 'package:cell_calendar/cell_calendar.dart';
 import 'package:flutter/material.dart';
 
 List<CalendarEvent> sampleEvents() {
-  final today = DateTime.utc(2021, 6, 1);
+  final today = DateTime.utc(2021, 7, 1);
   final sampleEvents = [
     CalendarEvent(
         eventName: "아보카도 샐러드",
         eventDate: today),
     CalendarEvent(
         eventName: "가지새우 샐러드",
-        eventDate: today.add(Duration(days: 3)),
+        eventDate: today.add(Duration(days: 1)),
         eventBackgroundColor: Colors.green),
     CalendarEvent(
         eventName: "부채살 샐러드",

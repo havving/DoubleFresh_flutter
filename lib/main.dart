@@ -11,8 +11,6 @@ void main() {
   runApp(MaterialApp(home: LoginPage()));
 }
 
-
-
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -42,7 +40,6 @@ class _LoginPageState extends State<LoginPage> {
       _pw = (_prefs.getString('pw') ?? '');
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
