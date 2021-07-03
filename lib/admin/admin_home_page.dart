@@ -25,7 +25,7 @@ class _AdminHomePage extends State<StatefulWidget> {
 
   /// Calendar
   DateTime startDate = DateTime.now().subtract(Duration(days: 2));
-  DateTime endDate = DateTime.now().add(Duration(days: 2));
+  DateTime endDate = DateTime.now().add(Duration(days: 8));
   DateTime selectedDate = DateTime.now().subtract(Duration(days: 0));
 
   onSelect(data) async {
@@ -36,6 +36,9 @@ class _AdminHomePage extends State<StatefulWidget> {
     for (var i in jsonList) {
       fromJson.add(AdminPickup.fromJson(i));
     }
+    setState(() {
+      _getDataTable();
+    });
   }
 
   onWeekSelect(data) {
@@ -154,7 +157,8 @@ class _AdminHomePage extends State<StatefulWidget> {
         ),
         body: Row(
           children: <Widget>[
-            Expanded(child: Column(
+            Expanded(
+                child: Column(
               children: <Widget>[
                 Container(
                     child: CalendarStrip(
