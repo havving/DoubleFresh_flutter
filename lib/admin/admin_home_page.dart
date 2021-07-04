@@ -18,6 +18,7 @@ class _AdminHomePage extends State<StatefulWidget> {
   late List<String> headingRow;
   late List<dynamic> jsonList;
   var fromJson = [];
+  var fromList = [];
 
   final _adminPickupUrl = 'http://192.168.0.22:3000/admin/pickup/';
 
@@ -33,10 +34,16 @@ class _AdminHomePage extends State<StatefulWidget> {
     var url = _adminPickupUrl + data.day.toString();
     http.Response _res = await http.get(Uri.parse(url));
     jsonList = jsonDecode(_res.body);
-    for (var i in jsonList) {
-      fromJson.add(AdminPickup.fromJson(i));
-    }
+
+    if (jsonList.length > 0) {
+      for (var i in jsonList) {
+        fromList.clear();
+        fromList.add(AdminPickup.fromJson(i));
+      }
+    } else fromList.clear();
+    // TODO 왜 setState()하면 날짜가 선택이 안되는지?
     setState(() {
+      fromJson = fromList;
       _getDataTable();
     });
   }
