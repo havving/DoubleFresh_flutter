@@ -25,7 +25,7 @@ class _AdminHomePage extends State<StatefulWidget> {
   _AdminHomePage({required this.jsonList});
 
   /// Calendar
-  DateTime startDate = DateTime.now().subtract(Duration(days: 2));
+  DateTime startDate = DateTime.now().subtract(Duration(days: 8));
   DateTime endDate = DateTime.now().add(Duration(days: 8));
   DateTime selectedDate = DateTime.now().subtract(Duration(days: 0));
 

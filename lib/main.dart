@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:double_fresh/admin/admin_page.dart';
 import 'package:double_fresh/home/calendar.dart';
 import 'package:double_fresh/model/user.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MaterialApp(home: LoginPage()));
@@ -25,138 +25,153 @@ class _LoginPageState extends State<LoginPage> {
 
   String _id = '';
   String _pw = '';
-  late SharedPreferences _prefs;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadId();
-  }
-
-  _loadId() async {
-    _prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _id = (_prefs.getString('id') ?? '');
-      _pw = (_prefs.getString('pw') ?? '');
-    });
-  }
+  bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: SafeArea(
-          child: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 24.0),
-            children: <Widget>[
-              SizedBox(height: 80.0),
-              Column(
-                children: <Widget>[
-                  Image.asset('assets/images/sprout.png'),
-                  SizedBox(height: 8.0),
-                  Text('Double Fresh'),
-                ],
+    return new Scaffold(
+      backgroundColor: Colors.white,
+      body: new Center(
+        child: new SingleChildScrollView(
+          child: new Container(
+            margin: new EdgeInsets.all(20.0),
+            child: Center(
+              child: new Form(
+                child: _getFormUI(),
               ),
-              SizedBox(height: 120.0),
-              TextField(
-                controller: _idController,
-                decoration: InputDecoration(
-                  filled: true,
-                  labelText: 'ID',
-                ),
-              ),
-              SizedBox(height: 12.0),
-              TextField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  filled: true,
-                  labelText: 'Password',
-                ),
-                obscureText: true,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Checkbox(
-                        value: _isChecked,
-                        onChanged: (value) {
-                          setState(() {
-                            _isChecked = value!;
-                          });
-                        },
-                      ),
-                      Text('ID 저장'),
-                    ],
-                  ),
-                  ButtonBar(
-                    children: <Widget>[
-                      RaisedButton(
-                        child: Text('로그인'),
-                        onPressed: () async {
-                          _id = _idController.text;
-                          _pw = _passwordController.text;
-                          _prefs.setString('id', _id);
-                          _prefs.setString('pw', _pw);
-
-                          var data = {
-                            "id": _id,
-                            "password": _pw,
-                            "rememberId": _isChecked
-                          };
-                          var body = json.encode(data);
-                          http.Response _res = await http.post(_url,
-                              headers: {
-                                "Content-Type": "application/json",
-                                "Access-Control-Allow-Origin": "*"
-                              },
-                              body: body);
-                          print(_res.body);
-                          if (_res.body.toString()[0] == '{') {
-                            Map<String, dynamic> jsonMap =
-                                jsonDecode(_res.body);
-                            var fromJson = User.fromJson(jsonMap);
-
-                            // 관리자 page
-                            if (fromJson.id == 9999) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AdminPage()),
-                              );
-                            } else {
-                              // 사용자 page
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Calendar(fromJson)),
-                              );
-                            }
-                          } else {
-                            loginFailAlert(context, _res.body);
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
+            ),
           ),
         ),
       ),
     );
   }
 
+  Widget _getFormUI() {
+    return new Column(
+      children: <Widget>[
+        Image.asset('assets/images/logo.png'),
+        SizedBox(height: 80.0),
+        TextField(
+          controller: _idController,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            hintText: 'ID',
+            filled: true,
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.lightGreen),
+              borderRadius: BorderRadius.circular(32.0),
+            ),
+          ),
+        ),
+        SizedBox(height: 20.0),
+        TextField(
+          controller: _passwordController,
+          obscureText: _obscureText,
+          decoration: InputDecoration(
+            hintText: 'Password',
+            filled: true,
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.lightGreen),
+              borderRadius: BorderRadius.circular(32.0),
+            ),
+            suffixIcon: GestureDetector(
+              onTap: () {
+                setState(() {
+                  _obscureText = !_obscureText;
+                });
+              },
+              child: Icon(
+                _obscureText ? Icons.visibility : Icons.visibility_off,
+                semanticLabel: _obscureText ? 'show password' : 'hide password',
+                color: Colors.blue[900],
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 15.0),
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 16.0),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                primary: Colors.lightGreen,
+                onPrimary: Colors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24)),
+                padding: EdgeInsets.all(12),
+                fixedSize: Size(150, 50)),
+            child: Text('로그인',
+                style: TextStyle(
+                    fontFamily: 'NanumSquare',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold)),
+            onPressed: () async {
+              _id = _idController.text;
+              _pw = _passwordController.text;
+
+              var data = {"id": _id, "password": _pw, "rememberId": _isChecked};
+              var body = json.encode(data);
+              http.Response _res = await http.post(_url,
+                  headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                  },
+                  body: body);
+              print(_res.body);
+              if (_res.body.toString()[0] == '{') {
+                Map<String, dynamic> jsonMap = jsonDecode(_res.body);
+                var fromJson = User.fromJson(jsonMap);
+
+                // 관리자 page
+                if (fromJson.id == 9999) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AdminPage()),
+                  );
+                } else {
+                  // 사용자 page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Calendar(fromJson)),
+                  );
+                }
+              } else {
+                loginFailAlert(context, _res.body);
+              }
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
   /// 로그인 실패 팝업
   void loginFailAlert(BuildContext context, text) {
     var alert = AlertDialog(
-      title: Text('로그인 실패'),
+      title: Text(
+        '로그인 실패',
+        style: TextStyle(
+          fontSize: 20.0,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
       content: SingleChildScrollView(
         child: ListBody(
-          children: <Widget>[Text(text)],
+          children: <Widget>[
+            Text(
+              text,
+              style: TextStyle(
+                fontSize: 16.0,
+              ),
+            ),
+          ],
         ),
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
       ),
       actions: <Widget>[
         FlatButton(

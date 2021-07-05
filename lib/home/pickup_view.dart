@@ -24,7 +24,8 @@ class _PickupView extends State<StatefulWidget> {
   late String _selectedTime;
 
   final _pickupCancelUrl = Uri.parse('http://192.168.0.22:3000/pickup_cancel');
-  final _pickupTimeModifyUrl = Uri.parse('http://192.168.0.22:3000/pickup_time_modify');
+  final _pickupTimeModifyUrl =
+      Uri.parse('http://192.168.0.22:3000/pickup_time_modify');
 
   @override
   void initState() {
@@ -48,7 +49,8 @@ class _PickupView extends State<StatefulWidget> {
   List<DataColumn> _getColumns() {
     List<DataColumn> dataColumn = [];
     for (var i in headingRow) {
-      dataColumn.add(DataColumn(label: Text(i)));
+      dataColumn.add(DataColumn(
+          label: Center(child: Text(i, textAlign: TextAlign.center))));
     }
     return dataColumn;
   }
@@ -60,10 +62,13 @@ class _PickupView extends State<StatefulWidget> {
     if (pickupList.length > 0) {
       for (var i = 0; i < pickupList.length; i++) {
         List<DataCell> cells = [];
-        cells.add(DataCell(Text((i + 1).toString())));
+        cells.add(
+            DataCell(Text((i + 1).toString(), textAlign: TextAlign.center)));
         cells.add(DataCell(Text(pickupList[i].salad)));
-        cells.add(DataCell(Text(pickupList[i].day.toString())));
-        cells.add(DataCell(Text(pickupList[i].time)));
+        cells.add(DataCell(
+            Text(pickupList[i].day.toString(), textAlign: TextAlign.center)));
+        cells.add(
+            DataCell(Text(pickupList[i].time, textAlign: TextAlign.center)));
         cells.add(DataCell(Icon(Icons.access_alarm), onTap: () async {
           Future<TimeOfDay?> selectedTime = showTimePicker(
             initialTime: TimeOfDay.now(),
@@ -117,13 +122,55 @@ class _PickupView extends State<StatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("내 픽업 현황"),
-        backgroundColor: Colors.lightGreen,
-      ),
-      body: Column(
+        appBar: AppBar(
+          title: Text("내 픽업 현황"),
+          backgroundColor: Colors.lightGreen,
+        ),
+        body: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              new Text(
+                "7월 ",
+                style: new TextStyle(
+                    fontSize: 28.0,
+                    color: const Color(0xFF00ae3c),
+                    fontWeight: FontWeight.w600),
+              ),
+              new Text(
+                "주 ",
+                style: new TextStyle(
+                    fontSize: 28.0,
+                    color: const Color(0xFF000000),
+                    fontWeight: FontWeight.w600),
+              ),
+              new Text(
+                "2",
+                style: new TextStyle(
+                    fontSize: 28.0,
+                    color: const Color(0xFFae4d00),
+                    fontWeight: FontWeight.w700),
+              ),
+              new Text(
+                "회 ",
+                style: new TextStyle(
+                    fontSize: 28.0,
+                    color: const Color(0xFF000000),
+                    fontWeight: FontWeight.w600),
+              ),
+              new Text(
+                "구독 중",
+                style: new TextStyle(
+                    fontSize: 28.0,
+                    color: const Color(0xFF000000),
+                    fontWeight: FontWeight.w200),
+              )
+            ])
+
+        /*Column(
         children: <Widget>[
-          Text('6월 주 ' + subJson.subWeekCount.toString() + '회 구독중'),
+          Text('7월 주 ' + subJson.subWeekCount.toString() + '회 구독중'),
           Text('총 ' +
               subJson.pickupTotalCount.toString() +
               '번 중 ' +
@@ -137,8 +184,8 @@ class _PickupView extends State<StatefulWidget> {
             ),
           ),
         ],
-      ),
-    );
+      ),*/
+        );
   }
 
   /// 팝업

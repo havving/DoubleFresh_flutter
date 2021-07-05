@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
-import '../main.dart';
 import 'calendar_event.dart';
 import 'dialog/password_modify_dialog.dart';
 import 'dialog/pickup_date_dialog.dart';
@@ -22,7 +21,6 @@ class Calendar extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => _MyHomePage(fromJson: fromJson);
-
 }
 
 class _MyHomePage extends State<StatefulWidget> {
@@ -43,8 +41,8 @@ class _MyHomePage extends State<StatefulWidget> {
     final _sampleEvents = sampleEvents();
     final cellCalendarPageController = CellCalendarPageController();
 
-    final _subscriptionUrl = Uri.parse(
-        'http://192.168.0.22:3000/subscription/');
+    final _subscriptionUrl =
+        Uri.parse('http://192.168.0.22:3000/subscription/');
 
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.lightGreen),
@@ -95,18 +93,20 @@ class _MyHomePage extends State<StatefulWidget> {
                             "Content-Type": "application/json",
                             "Access-Control-Allow-Origin": "*"
                           },
-                      body: body);
+                          body: body);
                       if (_res.body.toString()[0] == '{') {
                         Map<String, dynamic> jsonMap = jsonDecode(_res.body);
                         var subJson = Subscription.fromJson(jsonMap);
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => PickupViewPage(subJson)),
+                          MaterialPageRoute(
+                              builder: (context) => PickupViewPage(subJson)),
                         );
                       } else {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => PickupNullPage()),
+                          MaterialPageRoute(
+                              builder: (context) => PickupNullPage()),
                         );
                       }
                     },
