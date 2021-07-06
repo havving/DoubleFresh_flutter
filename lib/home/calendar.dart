@@ -45,7 +45,8 @@ class _MyHomePage extends State<StatefulWidget> {
         Uri.parse('http://192.168.0.22:3000/subscription/');
 
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.lightGreen),
+      theme: ThemeData(
+          primarySwatch: Colors.lightGreen, fontFamily: 'NanumSquare'),
       home: Scaffold(
         appBar: AppBar(
           title: Text('이달의 샐러드'),
@@ -55,15 +56,16 @@ class _MyHomePage extends State<StatefulWidget> {
             padding: EdgeInsets.zero,
             children: <Widget>[
               UserAccountsDrawerHeader(
-                accountName: Text('안녕하세요, ' + fromJson.name + '님!'),
-                accountEmail: Text("6월 정기구독 중"),
+                accountName: Text('안녕하세요, ' + fromJson.name + '님!',
+                    style: TextStyle(fontSize: 18)),
+                accountEmail: Text("7월 정기구독 중입니다."),
                 currentAccountPicture: CircleAvatar(
                   backgroundColor: Colors.white,
-                  backgroundImage: AssetImage('assets/images/sprout.png'),
+                  backgroundImage: AssetImage('assets/images/logo_icon.png'),
                 ),
                 // 배경색
                 decoration: BoxDecoration(
-                    color: Colors.green[200],
+                    color: Colors.lightGreen[400],
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(40.0),
                         bottomRight: Radius.circular(40.0))),
@@ -246,17 +248,6 @@ class _MyHomePage extends State<StatefulWidget> {
                     ),
                   ),
                   const Spacer(),
-/*                IconButton(
-                  padding: EdgeInsets.zero,
-                  icon: Icon(Icons.calendar_today),
-                  onPressed: () {
-                    cellCalendarPageController.animateToDate(
-                      DateTime.now(),
-                      curve: Curves.linear,
-                      duration: Duration(milliseconds: 300),
-                    );
-                  },
-                )*/
                 ],
               ),
             );
@@ -272,10 +263,12 @@ class _MyHomePage extends State<StatefulWidget> {
                 barrierDismissible: false,
                 context: context,
                 builder: (_) => AlertDialog(
-                      title: Text(date.month.monthName +
-                          '월 ' +
-                          date.day.toString() +
-                          '일'),
+                      title: Text(
+                          date.month.monthName +
+                              '월 ' +
+                              date.day.toString() +
+                              '일',
+                          style: TextStyle(fontFamily: 'NanumSquare')),
                       content: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: eventsOnTheDate
@@ -287,23 +280,38 @@ class _MyHomePage extends State<StatefulWidget> {
                                 color: event.eventBackgroundColor,
                                 child: Text(
                                   saladName = event.eventName,
-                                  style: TextStyle(color: event.eventTextColor),
+                                  style: TextStyle(
+                                      color: event.eventTextColor,
+                                      fontFamily: 'NanumSquare'),
                                 ),
                               ),
                             )
                             .toList(),
                       ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
                       actions: <Widget>[
-                        FlatButton(
-                          child: Text('닫기'),
+                        MaterialButton(
+                          child: Text('닫기',
+                              style: TextStyle(fontFamily: 'NanumSquare')),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          color: Colors.white,
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
                         ),
                         // 오늘 이후의 날짜만 '예약하기' 가능
                         if (DateTime.now().day <= date.day)
-                          FlatButton(
-                            child: Text('예약하기'),
+                          MaterialButton(
+                            child: Text('예약하기',
+                                style: TextStyle(fontFamily: 'NanumSquare')),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            color: Colors.white,
                             onPressed: () {
                               Future<TimeOfDay?> selectedTime = showTimePicker(
                                 initialTime: TimeOfDay.now(),

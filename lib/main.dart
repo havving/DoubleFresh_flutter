@@ -104,10 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                 padding: EdgeInsets.all(12),
                 fixedSize: Size(150, 50)),
             child: Text('로그인',
-                style: TextStyle(
-                    fontFamily: 'NanumSquare',
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold)),
+                style: TextStyle(fontFamily: 'NanumSquare', fontSize: 20)),
             onPressed: () async {
               _id = _idController.text;
               _pw = _passwordController.text;
@@ -154,8 +151,8 @@ class _LoginPageState extends State<LoginPage> {
       title: Text(
         '로그인 실패',
         style: TextStyle(
+          fontFamily: 'NanumSquare',
           fontSize: 20.0,
-          fontWeight: FontWeight.w700,
         ),
       ),
       content: SingleChildScrollView(
@@ -164,6 +161,7 @@ class _LoginPageState extends State<LoginPage> {
             Text(
               text,
               style: TextStyle(
+                fontFamily: 'NanumSquare',
                 fontSize: 16.0,
               ),
             ),
@@ -175,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       actions: <Widget>[
         FlatButton(
-          child: Text('OK'),
+          child: Text('OK', style: TextStyle(fontFamily: 'NanumSquare')),
           onPressed: () {
             Navigator.of(context).pop();
           },
