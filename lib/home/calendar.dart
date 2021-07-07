@@ -199,17 +199,25 @@ class _MyHomePage extends State<StatefulWidget> {
               ListTile(
                 leading: Icon(
                   Icons.local_phone,
-                  color: Colors.grey[850],
+                  color: Colors.green[900],
                 ),
-                title: Text('Tel'),
+                title: Text('전화'),
                 onTap: () => launch('tel://0324289233'),
               ),
               ListTile(
                 leading: Icon(
-                  Icons.launch,
-                  color: Colors.grey[850],
+                  Icons.chat_bubble_rounded,
+                  color: Colors.yellow[400],
                 ),
-                title: Text('Instagram'),
+                title: Text('카카오톡'),
+                onTap: () => launch('https://pf.kakao.com/_WGzhK'),
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.launch,
+                  color: Colors.pink[800],
+                ),
+                title: Text('인스타그램'),
                 onTap: () =>
                     launch('https://www.instagram.com/doublefresh_official/'),
               ),
@@ -360,12 +368,23 @@ class _MyHomePage extends State<StatefulWidget> {
     var alert = AlertDialog(
       content: SingleChildScrollView(
         child: ListBody(
-          children: <Widget>[Text(text)],
+          children: <Widget>[
+            Text(
+              text,
+              style: TextStyle(
+                fontFamily: 'NanumSquare',
+                fontSize: 16.0,
+              ),
+            ),
+          ],
         ),
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
       ),
       actions: <Widget>[
         FlatButton(
-          child: Text('OK'),
+          child: Text('OK', style: TextStyle(fontFamily: 'NanumSquare')),
           onPressed: () {
             Navigator.of(context, rootNavigator: true).pop(/*result*/);
           },

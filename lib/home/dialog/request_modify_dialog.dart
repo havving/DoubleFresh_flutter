@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 class RequestModifyDialog extends StatefulWidget {
   int id;
+
   RequestModifyDialog(this.id);
 
   @override
@@ -12,9 +13,9 @@ class RequestModifyDialog extends StatefulWidget {
 }
 
 class _RequestModifyState extends State<RequestModifyDialog> {
-
   final _requestController = TextEditingController();
-  final _requestModifyUrl = Uri.parse('http://192.168.0.22:3000/request_modify');
+  final _requestModifyUrl =
+      Uri.parse('http://192.168.0.22:3000/request_modify');
 
   final int id;
 
@@ -23,29 +24,40 @@ class _RequestModifyState extends State<RequestModifyDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('요청사항 수정하기'),
+      title: Text('요청사항 수정하기',
+          style: TextStyle(
+            fontFamily: 'NanumSquare',
+            fontSize: 20.0,
+          )),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
             TextField(
               controller: _requestController,
-              decoration:
-              InputDecoration(
-                  labelText: '요청사항 입력'
-              ),
+              decoration: InputDecoration(
+                  hintText: '요청사항 입력',
+                  hintStyle: TextStyle(fontFamily: 'NanumSquare')),
             ),
           ],
         ),
       ),
       actions: <Widget>[
-        FlatButton(
-          child: Text('닫기'),
+        MaterialButton(
+          child: Text('닫기', style: TextStyle(fontFamily: 'NanumSquare')),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          color: Colors.white,
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
-        FlatButton(
-          child: Text('확인'),
+        MaterialButton(
+          child: Text('확인', style: TextStyle(fontFamily: 'NanumSquare')),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          color: Colors.white,
           onPressed: () async {
             var data = {
               "id": id,
@@ -71,12 +83,20 @@ class _RequestModifyState extends State<RequestModifyDialog> {
     var alert = AlertDialog(
       content: SingleChildScrollView(
         child: ListBody(
-          children: <Widget>[Text(text)],
+          children: <Widget>[
+            Text(
+              text,
+              style: TextStyle(
+                fontFamily: 'NanumSquare',
+                fontSize: 16.0,
+              ),
+            ),
+          ],
         ),
       ),
       actions: <Widget>[
         FlatButton(
-          child: Text('OK'),
+          child: Text('OK', style: TextStyle(fontFamily: 'NanumSquare')),
           onPressed: () {
             Navigator.of(context, rootNavigator: true).pop(/*result*/);
           },

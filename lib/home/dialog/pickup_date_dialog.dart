@@ -25,15 +25,22 @@ class _PickupDateState extends State<PickupDateDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('픽업 날짜 고정하기'),
+      title: Text('픽업 날짜 고정하기',
+          style: TextStyle(
+            fontFamily: 'NanumSquare',
+            fontSize: 20.0,
+          )),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
       content: SingleChildScrollView(
         child: ToggleButtons(
           children: <Widget>[
-            Text('월'),
-            Text('화'),
-            Text('수'),
-            Text('목'),
-            Text('금'),
+            Text('월', style: TextStyle(fontFamily: 'NanumSquare')),
+            Text('화', style: TextStyle(fontFamily: 'NanumSquare')),
+            Text('수', style: TextStyle(fontFamily: 'NanumSquare')),
+            Text('목', style: TextStyle(fontFamily: 'NanumSquare')),
+            Text('금', style: TextStyle(fontFamily: 'NanumSquare')),
           ],
           isSelected: _btnState,
           selectedColor: Colors.green,
@@ -66,18 +73,23 @@ class _PickupDateState extends State<PickupDateDialog> {
       ),
       actions: <Widget>[
         FlatButton(
-          child: Text('닫기'),
+          child: Text('닫기', style: TextStyle(fontFamily: 'NanumSquare')),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          color: Colors.white,
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
         FlatButton(
-          child: Text('확인'),
+          child: Text('확인', style: TextStyle(fontFamily: 'NanumSquare')),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          color: Colors.white,
           onPressed: () async {
-            var data = {
-              "id": id,
-              "date": _selectDate
-            };
+            var data = {"id": id, "date": _selectDate};
             var body = json.encode(data);
             http.Response _res = await http.put(_fixedPickupDateUrl,
                 headers: {
@@ -97,12 +109,23 @@ class _PickupDateState extends State<PickupDateDialog> {
     var alert = AlertDialog(
       content: SingleChildScrollView(
         child: ListBody(
-          children: <Widget>[Text(text)],
+          children: <Widget>[
+            Text(
+              text,
+              style: TextStyle(
+                fontFamily: 'NanumSquare',
+                fontSize: 16.0,
+              ),
+            ),
+          ],
         ),
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
       ),
       actions: <Widget>[
         FlatButton(
-          child: Text('OK'),
+          child: Text('OK', style: TextStyle(fontFamily: 'NanumSquare')),
           onPressed: () {
             Navigator.of(context, rootNavigator: true).pop(/*result*/);
           },

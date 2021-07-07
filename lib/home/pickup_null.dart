@@ -9,9 +9,9 @@ class PickupNullPage extends StatelessWidget {
         backgroundColor: Colors.lightGreen,
       ),
       body: Center(
-        child: Text('구독 정보가 없습니다.'),
+        child: Text('구독 정보가 없습니다.',
+            style: TextStyle(fontFamily: 'NanumSquare', fontSize: 20.0)),
       ),
     );
   }
-
 }

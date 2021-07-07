@@ -122,70 +122,50 @@ class _PickupView extends State<StatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("내 픽업 현황"),
-          backgroundColor: Colors.lightGreen,
-        ),
-        body: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              new Text(
-                "7월 ",
-                style: new TextStyle(
-                    fontSize: 28.0,
-                    color: const Color(0xFF00ae3c),
-                    fontWeight: FontWeight.w600),
-              ),
-              new Text(
-                "주 ",
-                style: new TextStyle(
-                    fontSize: 28.0,
-                    color: const Color(0xFF000000),
-                    fontWeight: FontWeight.w600),
-              ),
-              new Text(
-                "2",
-                style: new TextStyle(
-                    fontSize: 28.0,
-                    color: const Color(0xFFae4d00),
-                    fontWeight: FontWeight.w700),
-              ),
-              new Text(
-                "회 ",
-                style: new TextStyle(
-                    fontSize: 28.0,
-                    color: const Color(0xFF000000),
-                    fontWeight: FontWeight.w600),
-              ),
-              new Text(
-                "구독 중",
-                style: new TextStyle(
-                    fontSize: 28.0,
-                    color: const Color(0xFF000000),
-                    fontWeight: FontWeight.w200),
-              )
-            ])
+      appBar: AppBar(
+        title: Text("내 픽업 현황"),
+        backgroundColor: Colors.lightGreen,
+      ),
+      body: Column(
+        children: <Widget>[_getFormUI()],
+      ),
+    );
+  }
 
-        /*Column(
+  Widget _getFormUI() {
+    return Container(
+      padding: const EdgeInsets.all(32),
+      child: Row(
         children: <Widget>[
-          Text('7월 주 ' + subJson.subWeekCount.toString() + '회 구독중'),
-          Text('총 ' +
-              subJson.pickupTotalCount.toString() +
-              '번 중 ' +
-              subJson.pickupCount.toString() +
-              '번 이용했습니다.'),
-          Text(subJson.pickupRemainCount.toString() + '번 남았습니다.'),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: SingleChildScrollView(
-              child: _getDataTable(),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  '7월 주 ' + subJson.subWeekCount.toString() + '회 구독중',
+                  style: TextStyle(fontFamily: 'NanumSquare', fontSize: 20),
+                ),
+                SizedBox(height: 8.0),
+                Text('총 ' +
+                    subJson.pickupTotalCount.toString() +
+                    '번 중 ' +
+                    subJson.pickupCount.toString() +
+                    '번 이용했습니다.'),
+                SizedBox(height: 8.0),
+                Text(subJson.pickupRemainCount.toString() + '번 남았습니다.'),
+                SizedBox(height: 10.0),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: SingleChildScrollView(
+                    child: _getDataTable(),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
-      ),*/
-        );
+      ),
+    );
   }
 
   /// 팝업
@@ -193,12 +173,23 @@ class _PickupView extends State<StatefulWidget> {
     var alert = AlertDialog(
       content: SingleChildScrollView(
         child: ListBody(
-          children: <Widget>[Text(text)],
+          children: <Widget>[
+            Text(
+              text,
+              style: TextStyle(
+                fontFamily: 'NanumSquare',
+                fontSize: 16.0,
+              ),
+            ),
+          ],
         ),
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
       ),
       actions: <Widget>[
         FlatButton(
-          child: Text('OK'),
+          child: Text('OK', style: TextStyle(fontFamily: 'NanumSquare')),
           onPressed: () {
             Navigator.of(context, rootNavigator: true).pop(/*result*/);
           },

@@ -39,6 +39,7 @@ class _PasswordModifyState extends State<PasswordModifyDialog> {
               obscureText: _obscureText,
               decoration: InputDecoration(
                 hintText: '새 비밀번호',
+                hintStyle: TextStyle(fontFamily: 'NanumSquare'),
                 suffixIcon: GestureDetector(
                   onTap: () {
                     setState(() {
