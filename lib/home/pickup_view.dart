@@ -146,11 +146,14 @@ class _PickupView extends State<StatefulWidget> {
                   style: TextStyle(fontFamily: 'NanumSquare', fontSize: 20),
                 ),
                 SizedBox(height: 8.0),
-                Text('총 ' +
-                    subJson.pickupTotalCount.toString() +
-                    '번 중 ' +
-                    subJson.pickupCount.toString() +
-                    '번 이용했습니다.'),
+                Text(
+                  '총 ' +
+                      subJson.pickupTotalCount.toString() +
+                      '번 중 ' +
+                      subJson.pickupCount.toString() +
+                      '번 이용했습니다.',
+                  style: TextStyle(fontFamily: 'NanumSquare', fontSize: 20),
+                ),
                 SizedBox(height: 8.0),
                 Text(subJson.pickupRemainCount.toString() + '번 남았습니다.'),
                 SizedBox(height: 10.0),
