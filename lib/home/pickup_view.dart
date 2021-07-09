@@ -49,8 +49,17 @@ class _PickupView extends State<StatefulWidget> {
   List<DataColumn> _getColumns() {
     List<DataColumn> dataColumn = [];
     for (var i in headingRow) {
-      dataColumn.add(DataColumn(
-          label: Center(child: Text(i, textAlign: TextAlign.center))));
+      dataColumn.add(
+        DataColumn(
+          label: Center(
+            child: Text(
+              i,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontFamily: 'NanumSquare'),
+            ),
+          ),
+        ),
+      );
     }
     return dataColumn;
   }
