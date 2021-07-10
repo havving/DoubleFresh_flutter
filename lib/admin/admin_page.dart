@@ -44,29 +44,31 @@ class _AdminPage extends State<StatefulWidget> {
           items: [
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.home,
+                Icons.my_library_books_outlined,
                 size: 30,
-                color: _curIndex == 0 ? Colors.blue : Colors.black54,
+                color: _curIndex == 0 ? Colors.cyan[900] : Colors.black54,
               ),
               title: Text(
-                'Home',
+                '픽업 현황',
                 style: TextStyle(
+                  fontFamily: 'NanumSquare',
                   fontSize: 15,
-                  color: _curIndex == 0 ? Colors.blue : Colors.black54,
+                  color: _curIndex == 0 ? Colors.cyan[900] : Colors.black54,
                 ),
               ),
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.search,
+                Icons.person_search,
                 size: 30,
-                color: _curIndex == 1 ? Colors.blue : Colors.black54,
+                color: _curIndex == 1 ? Colors.cyan[900] : Colors.black54,
               ),
               title: Text(
-                'User',
+                '구독자 관리',
                 style: TextStyle(
+                  fontFamily: 'NanumSquare',
                   fontSize: 15,
-                  color: _curIndex == 1 ? Colors.blue : Colors.black54,
+                  color: _curIndex == 1 ? Colors.cyan[900] : Colors.black54,
                 ),
               ),
             ),

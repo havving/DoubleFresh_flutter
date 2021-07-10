@@ -1,10 +1,9 @@
 import 'dart:convert';
 
+import 'package:double_fresh/model/admin_user.dart';
 import 'package:double_fresh/model/subscription_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-import 'package:double_fresh/model/admin_user.dart';
 
 import 'admin_user_add_dialog.dart';
 import 'admin_user_dialog.dart';
@@ -25,21 +24,14 @@ class _AdminUserPage extends State<StatefulWidget> {
 
   int selectedIndex = -1;
 
-  final _adminUserInfoUrl ='http://192.168.0.22:3000/admin/user_info_detail/';
+  final _adminUserInfoUrl = 'http://192.168.0.22:3000/admin/user_info_detail/';
 
   _AdminUserPage({required this.jsonList});
 
   @override
   void initState() {
     super.initState();
-    headingRow = [
-      '번호',
-      'ID',
-      '이름',
-      '휴대폰번호',
-      '구독 여부',
-      '상세정보'
-    ];
+    headingRow = ['번호', '   ID', '이름', '  휴대폰번호', '구독 여부', '상세정보'];
     for (var i in jsonList) {
       fromJson.add(AdminUser.fromJson(i));
     }
@@ -64,7 +56,12 @@ class _AdminUserPage extends State<StatefulWidget> {
   List<DataColumn> _getColumns() {
     List<DataColumn> dataColumn = [];
     for (var i in headingRow) {
-      dataColumn.add(DataColumn(label: Text(i)));
+      dataColumn.add(DataColumn(
+          label: Text(
+        i,
+        textAlign: TextAlign.center,
+        style: TextStyle(fontFamily: 'NanumSquare'),
+      )));
     }
     return dataColumn;
   }
@@ -75,11 +72,26 @@ class _AdminUserPage extends State<StatefulWidget> {
 
     for (var i = 0; i < fromJson.length; i++) {
       List<DataCell> cells = [];
-      cells.add(DataCell(Text((i + 1).toString())));
-      cells.add(DataCell(Text(fromJson[i].id.toString())));
-      cells.add(DataCell(Text(fromJson[i].name)));
-      cells.add(DataCell(Text(fromJson[i].phone.toString())));
-      cells.add(DataCell(Text(fromJson[i].status)));
+      cells.add(DataCell(Text(
+        (i + 1).toString(),
+        style: TextStyle(fontFamily: 'NanumSquare'),
+      )));
+      cells.add(DataCell(Text(
+        fromJson[i].id.toString(),
+        style: TextStyle(fontFamily: 'NanumSquare'),
+      )));
+      cells.add(DataCell(Text(
+        fromJson[i].name,
+        style: TextStyle(fontFamily: 'NanumSquare'),
+      )));
+      cells.add(DataCell(Text(
+        fromJson[i].phone.toString(),
+        style: TextStyle(fontFamily: 'NanumSquare'),
+      )));
+      cells.add(DataCell(Text(
+        fromJson[i].status == 'Y' ? 'O' : 'X',
+        style: TextStyle(fontFamily: 'NanumSquare'),
+      )));
       cells.add(DataCell(Icon(Icons.open_in_new), onTap: () async {
         var url = _adminUserInfoUrl + fromJson[i].id.toString();
         http.Response _res = await http.get(Uri.parse(url));
@@ -112,10 +124,11 @@ class _AdminUserPage extends State<StatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.lightGreen),
+      theme: ThemeData(
+          primarySwatch: Colors.teal, fontFamily: 'NanumSquare'),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('사용자 관리'),
+          title: Text('구독자 관리'),
         ),
         body: Column(
           children: <Widget>[
@@ -124,10 +137,19 @@ class _AdminUserPage extends State<StatefulWidget> {
                 child: SingleChildScrollView(
                   child: _getDataTable(),
                 )),
+            SizedBox(height: 30.0),
             ButtonBar(
               children: <Widget>[
-                RaisedButton(
-                  child: Text('사용자 추가'),
+                MaterialButton(
+                    child: Text(
+                      '구독자 추가',
+                      style: TextStyle(fontFamily: 'NanumSquare'),
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    color: Colors.cyan[800],
+                    minWidth: 100, height: 50,
                     onPressed: () {
                       showDialog(
                           barrierDismissible: false,
@@ -136,12 +158,17 @@ class _AdminUserPage extends State<StatefulWidget> {
                             return AdminUserAddDialog();
                           });
                     }),
-                RaisedButton(
-                    child: Text('사용자 삭제'),
-                    onPressed: () async {
-
-
-                    }),
+                MaterialButton(
+                    child: Text(
+                      '구독자 삭제',
+                      style: TextStyle(fontFamily: 'NanumSquare'),
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    color: Colors.cyan[800],
+                    minWidth: 100, height: 50,
+                    onPressed: () async {}),
               ],
             )
           ],

@@ -26,7 +26,7 @@ class _AdminUserState extends State<StatefulWidget> {
   @override
   void initState() {
     super.initState();
-    headingRow = ['구독 횟수', '총 픽업 횟수', '현재 픽업 횟수', '남은 픽업 횟수', '요청사항'];
+    headingRow = ['구독 횟수', '총 구독 횟수', '총 픽업 횟수', '남은 픽업 횟수', '요청사항'];
   }
 
   /// 표 데이터 값
@@ -43,7 +43,11 @@ class _AdminUserState extends State<StatefulWidget> {
   List<DataColumn> _getColumns() {
     List<DataColumn> dataColumn = [];
     for (var i in headingRow) {
-      dataColumn.add(DataColumn(label: Text(i)));
+      dataColumn.add(DataColumn(
+          label: Text(
+        i,
+        style: TextStyle(fontFamily: 'NanumSquare'),
+      )));
     }
     return dataColumn;
   }
@@ -53,10 +57,22 @@ class _AdminUserState extends State<StatefulWidget> {
     List<DataRow> dataRow = [];
     List<DataCell> cells = [];
 
-    cells.add(DataCell(Text(subJson.subWeekCount.toString())));
-    cells.add(DataCell(Text(subJson.pickupTotalCount.toString())));
-    cells.add(DataCell(Text(subJson.pickupCount.toString())));
-    cells.add(DataCell(Text(subJson.pickupRemainCount.toString())));
+    cells.add(DataCell(Text(
+      subJson.subWeekCount.toString(),
+      style: TextStyle(fontFamily: 'NanumSquare'),
+    )));
+    cells.add(DataCell(Text(
+      subJson.pickupTotalCount.toString(),
+      style: TextStyle(fontFamily: 'NanumSquare'),
+    )));
+    cells.add(DataCell(Text(
+      subJson.pickupCount.toString(),
+      style: TextStyle(fontFamily: 'NanumSquare'),
+    )));
+    cells.add(DataCell(Text(
+      subJson.pickupRemainCount.toString(),
+      style: TextStyle(fontFamily: 'NanumSquare'),
+    )));
     cells.add(DataCell(Text(subJson.request)));
 
     dataRow.add(DataRow(cells: cells));
@@ -67,7 +83,8 @@ class _AdminUserState extends State<StatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(name + "(" + id.toString() + ") 고객님"),
+      title: Text(name + "(" + id.toString() + ")",
+          style: TextStyle(fontFamily: 'NanumSquare')),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
@@ -80,8 +97,9 @@ class _AdminUserState extends State<StatefulWidget> {
         ),
       ),
       actions: <Widget>[
-        FlatButton(
-          child: Text('닫기'),
+        MaterialButton(
+          child: Text('닫기', style: TextStyle(fontFamily: 'NanumSquare')),
+          color: Colors.white,
           onPressed: () {
             Navigator.of(context).pop();
           },

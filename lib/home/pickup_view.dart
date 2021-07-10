@@ -30,7 +30,7 @@ class _PickupView extends State<StatefulWidget> {
   @override
   void initState() {
     super.initState();
-    headingRow = ['번호', '샐러드', '날짜', '예약시간', '수정', '취소'];
+    headingRow = [' ', '     샐러드', '날짜', '  예약시간', '수정', '취소'];
     list = subJson.pickupInfo;
     pickupList = list.map((e) => PickupInfo.fromJson(e)).toList();
   }
@@ -71,13 +71,19 @@ class _PickupView extends State<StatefulWidget> {
     if (pickupList.length > 0) {
       for (var i = 0; i < pickupList.length; i++) {
         List<DataCell> cells = [];
-        cells.add(
-            DataCell(Text((i + 1).toString(), textAlign: TextAlign.center)));
-        cells.add(DataCell(Text(pickupList[i].salad)));
-        cells.add(DataCell(
-            Text(pickupList[i].day.toString(), textAlign: TextAlign.center)));
-        cells.add(
-            DataCell(Text(pickupList[i].time, textAlign: TextAlign.center)));
+        cells.add(DataCell(Text((i + 1).toString(),
+            style: TextStyle(fontFamily: 'NanumSquare'),
+            textAlign: TextAlign.center)));
+        cells.add(DataCell(Text(
+          pickupList[i].salad,
+          style: TextStyle(fontFamily: 'NanumSquare'),
+        )));
+        cells.add(DataCell(Text(pickupList[i].day.toString() + '일',
+            style: TextStyle(fontFamily: 'NanumSquare'),
+            textAlign: TextAlign.center)));
+        cells.add(DataCell(Text(pickupList[i].time,
+            style: TextStyle(fontFamily: 'NanumSquare'),
+            textAlign: TextAlign.center)));
         cells.add(DataCell(Icon(Icons.access_alarm), onTap: () async {
           Future<TimeOfDay?> selectedTime = showTimePicker(
             initialTime: TimeOfDay.now(),
@@ -154,18 +160,13 @@ class _PickupView extends State<StatefulWidget> {
                   '7월 주 ' + subJson.subWeekCount.toString() + '회 구독중',
                   style: TextStyle(fontFamily: 'NanumSquare', fontSize: 20),
                 ),
-                SizedBox(height: 8.0),
-                Text(
-                  '총 ' +
-                      subJson.pickupTotalCount.toString() +
-                      '번 중 ' +
-                      subJson.pickupCount.toString() +
-                      '번 이용했습니다.',
-                  style: TextStyle(fontFamily: 'NanumSquare', fontSize: 20),
-                ),
-                SizedBox(height: 8.0),
-                Text(subJson.pickupRemainCount.toString() + '번 남았습니다.'),
+                SizedBox(height: 15.0),
+                Text('총 구독 횟수 : ' + subJson.pickupTotalCount.toString() + '회', style: TextStyle(fontFamily: 'NanumSquare'),),
                 SizedBox(height: 10.0),
+                Text('총 픽업 횟수 : ' + subJson.pickupCount.toString() + '회', style: TextStyle(fontFamily: 'NanumSquare'),),
+                SizedBox(height: 10.0),
+                Text('남은 픽업 횟수 : ' + subJson.pickupRemainCount.toString() + '회', style: TextStyle(fontFamily: 'NanumSquare'),),
+                SizedBox(height: 25.0),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: SingleChildScrollView(

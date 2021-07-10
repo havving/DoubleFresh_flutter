@@ -29,20 +29,36 @@ class _AdminUserAddState extends State<StatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      title: Text('구독자 추가',
+          style: TextStyle(fontFamily: 'NanumSquare')),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
-            Text('ID'),
             TextField(
               controller: _idController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: 'ID',
+                hintText: '0000',
+                border: OutlineInputBorder(),
+              ),
             ),
-            Text('이름'),
             TextField(
               controller: _nameController,
+              decoration: InputDecoration(
+                labelText: '이름',
+                hintText: '김더블',
+                border: OutlineInputBorder(),
+              ),
             ),
-            Text('휴대폰번호'),
             TextField(
               controller: _phoneController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: '휴대폰 번호',
+                hintText: '010을 제외한 8자리',
+                border: OutlineInputBorder(),
+              ),
             ),
             Text('구독여부'),
             DropdownButton(
@@ -74,22 +90,28 @@ class _AdminUserAddState extends State<StatefulWidget> {
                 });
               },
             ),
-            Text('요청사항'),
             TextField(
               controller: _requestController,
+              decoration: InputDecoration(
+                labelText: '요청사항',
+                hintText: '',
+                border: OutlineInputBorder(),
+              ),
             ),
           ],
         ),
       ),
       actions: <Widget>[
-        FlatButton(
-          child: Text('닫기'),
+        MaterialButton(
+          child: Text('닫기', style: TextStyle(fontFamily: 'NanumSquare')),
+          color: Colors.white,
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
-        FlatButton(
-          child: Text('추가'),
+        MaterialButton(
+          child: Text('추가', style: TextStyle(fontFamily: 'NanumSquare')),
+          color: Colors.teal[300],
           onPressed: () async {
             var data = {
               "id": _idController.text,

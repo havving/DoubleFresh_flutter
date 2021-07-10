@@ -40,7 +40,8 @@ class _AdminHomePage extends State<StatefulWidget> {
         fromList.clear();
         fromList.add(AdminPickup.fromJson(i));
       }
-    } else fromList.clear();
+    } else
+      fromList.clear();
     // TODO 왜 setState()하면 날짜가 선택이 안되는지?
     setState(() {
       fromJson = fromList;
@@ -100,10 +101,10 @@ class _AdminHomePage extends State<StatefulWidget> {
   void initState() {
     super.initState();
     headingRow = [
-      '번호',
+      ' ',
       '이름',
-      '예약시간',
-      '요청사항',
+      '  예약시간',
+      '  요청사항',
     ];
     for (var i in jsonList) {
       fromJson.add(AdminPickup.fromJson(i));
@@ -124,7 +125,15 @@ class _AdminHomePage extends State<StatefulWidget> {
   List<DataColumn> _getColumns() {
     List<DataColumn> dataColumn = [];
     for (var i in headingRow) {
-      dataColumn.add(DataColumn(label: Text(i)));
+      dataColumn.add(
+        DataColumn(
+          label: Text(
+            i,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontFamily: 'NanumSquare'),
+          ),
+        ),
+      );
     }
     return dataColumn;
   }
@@ -137,10 +146,22 @@ class _AdminHomePage extends State<StatefulWidget> {
     if (fromJson.length > 0) {
       for (var i = 0; i < fromJson.length; i++) {
         List<DataCell> cells = [];
-        cells.add(DataCell(Text((i + 1).toString())));
-        cells.add(DataCell(Text(fromJson[i].name)));
-        cells.add(DataCell(Text(fromJson[i].time)));
-        cells.add(DataCell(Text(fromJson[i].request)));
+        cells.add(DataCell(Text(
+          (i + 1).toString(),
+          style: TextStyle(fontFamily: 'NanumSquare'),
+        )));
+        cells.add(DataCell(Text(
+          fromJson[i].name,
+          style: TextStyle(fontFamily: 'NanumSquare'),
+        )));
+        cells.add(DataCell(Text(
+          fromJson[i].time,
+          style: TextStyle(fontFamily: 'NanumSquare'),
+        )));
+        cells.add(DataCell(Text(
+          fromJson[i].request,
+          style: TextStyle(fontFamily: 'NanumSquare'),
+        )));
 
         dataRow.add(DataRow(cells: cells));
       }
@@ -157,10 +178,11 @@ class _AdminHomePage extends State<StatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.lightGreen),
+      theme: ThemeData(
+          primarySwatch: Colors.teal, fontFamily: 'NanumSquare'),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('픽업 관리'),
+          title: Text('픽업 현황'),
         ),
         body: Row(
           children: <Widget>[
@@ -178,7 +200,7 @@ class _AdminHomePage extends State<StatefulWidget> {
                   iconColor: Colors.black87,
                   monthNameWidget: _monthNameWidget,
                   containerDecoration:
-                      BoxDecoration(color: Colors.lightGreen[200]),
+                      BoxDecoration(color: Colors.teal[200]),
                   addSwipeGesture: true,
                 )),
                 SingleChildScrollView(
