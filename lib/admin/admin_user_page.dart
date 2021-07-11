@@ -25,6 +25,7 @@ class _AdminUserPage extends State<StatefulWidget> {
   int selectedIndex = -1;
 
   final _adminUserInfoUrl = 'http://192.168.0.22:3000/admin/user_info_detail/';
+  final _adminUserDelUrl = 'http://192.168.0.22:3000/admin/user_delete/';
 
   _AdminUserPage({required this.jsonList});
 
@@ -109,8 +110,7 @@ class _AdminUserPage extends State<StatefulWidget> {
       dataRow.add(DataRow(
           cells: cells,
           selected: i == selectedIndex,
-          onSelectChanged: (val) async {
-            // TODO checkbox
+          onSelectChanged: (val) {
             setState(() {
               selectedIndex = i;
             });

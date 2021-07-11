@@ -35,8 +35,12 @@ class _RequestModifyState extends State<RequestModifyDialog> {
             TextField(
               controller: _requestController,
               decoration: InputDecoration(
-                  hintText: '요청사항 입력',
-                  hintStyle: TextStyle(fontFamily: 'NanumSquare')),
+                labelText: '요청사항 입력',
+                labelStyle: TextStyle(fontFamily: 'NanumSquare'),
+                hintText: '요청사항 입력',
+                hintStyle: TextStyle(fontFamily: 'NanumSquare'),
+                border: OutlineInputBorder(),
+              ),
             ),
           ],
         ),
@@ -44,9 +48,6 @@ class _RequestModifyState extends State<RequestModifyDialog> {
       actions: <Widget>[
         MaterialButton(
           child: Text('닫기', style: TextStyle(fontFamily: 'NanumSquare')),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
           color: Colors.white,
           onPressed: () {
             Navigator.of(context).pop();
@@ -54,10 +55,7 @@ class _RequestModifyState extends State<RequestModifyDialog> {
         ),
         MaterialButton(
           child: Text('확인', style: TextStyle(fontFamily: 'NanumSquare')),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          color: Colors.white,
+          color: Colors.teal[300],
           onPressed: () async {
             var data = {
               "id": id,
@@ -95,8 +93,9 @@ class _RequestModifyState extends State<RequestModifyDialog> {
         ),
       ),
       actions: <Widget>[
-        FlatButton(
-          child: Text('OK', style: TextStyle(fontFamily: 'NanumSquare')),
+        MaterialButton(
+          child: Text('확인', style: TextStyle(fontFamily: 'NanumSquare')),
+          color: Colors.teal[300],
           onPressed: () {
             Navigator.of(context, rootNavigator: true).pop(/*result*/);
           },

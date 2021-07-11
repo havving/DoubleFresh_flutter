@@ -138,8 +138,11 @@ class _PickupView extends State<StatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("내 픽업 현황"),
-        backgroundColor: Colors.lightGreen,
+        title: Text(
+          "내 픽업 현황",
+          style: TextStyle(fontFamily: 'NanumSquare'),
+        ),
+        backgroundColor: Colors.teal,
       ),
       body: Column(
         children: <Widget>[_getFormUI()],
@@ -161,11 +164,20 @@ class _PickupView extends State<StatefulWidget> {
                   style: TextStyle(fontFamily: 'NanumSquare', fontSize: 20),
                 ),
                 SizedBox(height: 15.0),
-                Text('총 구독 횟수 : ' + subJson.pickupTotalCount.toString() + '회', style: TextStyle(fontFamily: 'NanumSquare'),),
+                Text(
+                  '총 구독 횟수 : ' + subJson.pickupTotalCount.toString() + '회',
+                  style: TextStyle(fontFamily: 'NanumSquare'),
+                ),
                 SizedBox(height: 10.0),
-                Text('총 픽업 횟수 : ' + subJson.pickupCount.toString() + '회', style: TextStyle(fontFamily: 'NanumSquare'),),
+                Text(
+                  '총 픽업 횟수 : ' + subJson.pickupCount.toString() + '회',
+                  style: TextStyle(fontFamily: 'NanumSquare'),
+                ),
                 SizedBox(height: 10.0),
-                Text('남은 픽업 횟수 : ' + subJson.pickupRemainCount.toString() + '회', style: TextStyle(fontFamily: 'NanumSquare'),),
+                Text(
+                  '남은 픽업 횟수 : ' + subJson.pickupRemainCount.toString() + '회',
+                  style: TextStyle(fontFamily: 'NanumSquare'),
+                ),
                 SizedBox(height: 25.0),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -197,12 +209,10 @@ class _PickupView extends State<StatefulWidget> {
           ],
         ),
       ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
       actions: <Widget>[
-        FlatButton(
-          child: Text('OK', style: TextStyle(fontFamily: 'NanumSquare')),
+        MaterialButton(
+          child: Text('확인', style: TextStyle(fontFamily: 'NanumSquare')),
+          color: Colors.teal[300],
           onPressed: () {
             Navigator.of(context, rootNavigator: true).pop(/*result*/);
           },

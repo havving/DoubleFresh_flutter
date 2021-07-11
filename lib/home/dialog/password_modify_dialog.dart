@@ -28,9 +28,6 @@ class _PasswordModifyState extends State<PasswordModifyDialog> {
             fontFamily: 'NanumSquare',
             fontSize: 20.0,
           )),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
@@ -38,8 +35,11 @@ class _PasswordModifyState extends State<PasswordModifyDialog> {
               controller: _newPasswordController,
               obscureText: _obscureText,
               decoration: InputDecoration(
+                labelText: '새 비밀번호',
+                labelStyle: TextStyle(fontFamily: 'NanumSquare'),
                 hintText: '새 비밀번호',
                 hintStyle: TextStyle(fontFamily: 'NanumSquare'),
+                border: OutlineInputBorder(),
                 suffixIcon: GestureDetector(
                   onTap: () {
                     setState(() {
@@ -50,7 +50,7 @@ class _PasswordModifyState extends State<PasswordModifyDialog> {
                     _obscureText ? Icons.visibility : Icons.visibility_off,
                     semanticLabel:
                         _obscureText ? 'show password' : 'hide password',
-                    color: Colors.blue[900],
+                    color: Colors.cyan[800],
                   ),
                 ),
               ),
@@ -61,9 +61,6 @@ class _PasswordModifyState extends State<PasswordModifyDialog> {
       actions: <Widget>[
         MaterialButton(
           child: Text('닫기', style: TextStyle(fontFamily: 'NanumSquare')),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
           color: Colors.white,
           onPressed: () {
             Navigator.of(context).pop();
@@ -71,10 +68,7 @@ class _PasswordModifyState extends State<PasswordModifyDialog> {
         ),
         MaterialButton(
           child: Text('확인', style: TextStyle(fontFamily: 'NanumSquare')),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          color: Colors.white,
+          color: Colors.teal[300],
           onPressed: () async {
             var data = {
               "id": id,
@@ -111,12 +105,10 @@ class _PasswordModifyState extends State<PasswordModifyDialog> {
           ],
         ),
       ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
       actions: <Widget>[
-        FlatButton(
-          child: Text('OK', style: TextStyle(fontFamily: 'NanumSquare')),
+        MaterialButton(
+          child: Text('확인', style: TextStyle(fontFamily: 'NanumSquare')),
+          color: Colors.teal[300],
           onPressed: () {
             Navigator.of(context, rootNavigator: true).pop(/*result*/);
           },

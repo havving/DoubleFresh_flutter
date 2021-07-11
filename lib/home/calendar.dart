@@ -46,7 +46,7 @@ class _MyHomePage extends State<StatefulWidget> {
 
     return MaterialApp(
       theme: ThemeData(
-          primarySwatch: Colors.lightGreen, fontFamily: 'NanumSquare'),
+          primarySwatch: Colors.teal, fontFamily: 'NanumSquare'),
       home: Scaffold(
         appBar: AppBar(
           title: Text('이달의 샐러드'),
@@ -65,7 +65,7 @@ class _MyHomePage extends State<StatefulWidget> {
                 ),
                 // 배경색
                 decoration: BoxDecoration(
-                    color: Colors.lightGreen[400],
+                    color: Colors.teal[200],
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(40.0),
                         bottomRight: Radius.circular(40.0))),
@@ -296,16 +296,10 @@ class _MyHomePage extends State<StatefulWidget> {
                             )
                             .toList(),
                       ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
                       actions: <Widget>[
                         MaterialButton(
                           child: Text('닫기',
                               style: TextStyle(fontFamily: 'NanumSquare')),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
                           color: Colors.white,
                           onPressed: () {
                             Navigator.of(context).pop();
@@ -316,10 +310,7 @@ class _MyHomePage extends State<StatefulWidget> {
                           MaterialButton(
                             child: Text('예약하기',
                                 style: TextStyle(fontFamily: 'NanumSquare')),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            color: Colors.white,
+                            color: Colors.teal[300],
                             onPressed: () {
                               Future<TimeOfDay?> selectedTime = showTimePicker(
                                 initialTime: TimeOfDay.now(),
@@ -379,12 +370,10 @@ class _MyHomePage extends State<StatefulWidget> {
           ],
         ),
       ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
       actions: <Widget>[
-        FlatButton(
-          child: Text('OK', style: TextStyle(fontFamily: 'NanumSquare')),
+        MaterialButton(
+          child: Text('확인', style: TextStyle(fontFamily: 'NanumSquare')),
+          color: Colors.teal[300],
           onPressed: () {
             Navigator.of(context, rootNavigator: true).pop(/*result*/);
           },

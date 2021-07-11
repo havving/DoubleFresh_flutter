@@ -30,9 +30,6 @@ class _PickupDateState extends State<PickupDateDialog> {
             fontFamily: 'NanumSquare',
             fontSize: 20.0,
           )),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
       content: SingleChildScrollView(
         child: ToggleButtons(
           children: <Widget>[
@@ -43,8 +40,8 @@ class _PickupDateState extends State<PickupDateDialog> {
             Text('금', style: TextStyle(fontFamily: 'NanumSquare')),
           ],
           isSelected: _btnState,
-          selectedColor: Colors.green,
-          selectedBorderColor: Colors.green[300],
+          selectedColor: Colors.teal[600],
+          selectedBorderColor: Colors.teal[300],
           splashColor: Colors.teal,
           borderWidth: 5,
           onPressed: (int index) => {
@@ -72,22 +69,16 @@ class _PickupDateState extends State<PickupDateDialog> {
         ),
       ),
       actions: <Widget>[
-        FlatButton(
+        MaterialButton(
           child: Text('닫기', style: TextStyle(fontFamily: 'NanumSquare')),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
           color: Colors.white,
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
-        FlatButton(
+        MaterialButton(
           child: Text('확인', style: TextStyle(fontFamily: 'NanumSquare')),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          color: Colors.white,
+          color: Colors.teal[300],
           onPressed: () async {
             var data = {"id": id, "date": _selectDate};
             var body = json.encode(data);
@@ -124,8 +115,9 @@ class _PickupDateState extends State<PickupDateDialog> {
         borderRadius: BorderRadius.circular(16),
       ),
       actions: <Widget>[
-        FlatButton(
-          child: Text('OK', style: TextStyle(fontFamily: 'NanumSquare')),
+        MaterialButton(
+          child: Text('확인', style: TextStyle(fontFamily: 'NanumSquare')),
+          color: Colors.teal[300],
           onPressed: () {
             Navigator.of(context, rootNavigator: true).pop(/*result*/);
           },
