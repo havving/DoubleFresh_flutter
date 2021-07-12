@@ -57,11 +57,9 @@ class _LoginPageState extends State<LoginPage> {
           decoration: InputDecoration(
             hintText: 'ID',
             filled: true,
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+            border: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.lightGreen),
-              borderRadius: BorderRadius.circular(32.0),
+              borderSide: BorderSide(color: Colors.teal),
             ),
           ),
         ),
@@ -72,11 +70,9 @@ class _LoginPageState extends State<LoginPage> {
           decoration: InputDecoration(
             hintText: 'Password',
             filled: true,
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+            border: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.lightGreen),
-              borderRadius: BorderRadius.circular(32.0),
+              borderSide: BorderSide(color: Colors.teal),
             ),
             suffixIcon: GestureDetector(
               onTap: () {
@@ -87,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Icon(
                 _obscureText ? Icons.visibility : Icons.visibility_off,
                 semanticLabel: _obscureText ? 'show password' : 'hide password',
-                color: Colors.blue[900],
+                color: Colors.cyan[800],
               ),
             ),
           ),
@@ -97,10 +93,9 @@ class _LoginPageState extends State<LoginPage> {
           padding: EdgeInsets.symmetric(vertical: 16.0),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-                primary: Colors.lightGreen,
+                primary: Colors.cyan[800],
                 onPrimary: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                 padding: EdgeInsets.all(12),
                 fixedSize: Size(150, 50)),
             child: Text('로그인',
@@ -172,8 +167,9 @@ class _LoginPageState extends State<LoginPage> {
         borderRadius: BorderRadius.circular(16),
       ),
       actions: <Widget>[
-        FlatButton(
-          child: Text('OK', style: TextStyle(fontFamily: 'NanumSquare')),
+        MaterialButton(
+          child: Text('확인', style: TextStyle(fontFamily: 'NanumSquare')),
+          color: Colors.teal[300],
           onPressed: () {
             Navigator.of(context).pop();
           },
