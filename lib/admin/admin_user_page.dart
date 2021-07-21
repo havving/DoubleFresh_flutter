@@ -32,7 +32,7 @@ class _AdminUserPage extends State<StatefulWidget> {
   @override
   void initState() {
     super.initState();
-    headingRow = ['번호', '   ID', '이름', '  휴대폰번호', '구독 여부', '상세정보'];
+    headingRow = [/*'번호', */'   ID', '이름', '  전화번호', '구독 여부', '상세정보'];
     for (var i in jsonList) {
       fromJson.add(AdminUser.fromJson(i));
     }
@@ -73,10 +73,10 @@ class _AdminUserPage extends State<StatefulWidget> {
 
     for (var i = 0; i < fromJson.length; i++) {
       List<DataCell> cells = [];
-      cells.add(DataCell(Text(
+      /*cells.add(DataCell(Text(
         (i + 1).toString(),
         style: TextStyle(fontFamily: 'NanumSquare'),
-      )));
+      )));*/
       cells.add(DataCell(Text(
         fromJson[i].id.toString(),
         style: TextStyle(fontFamily: 'NanumSquare'),

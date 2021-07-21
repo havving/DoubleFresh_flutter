@@ -88,11 +88,12 @@ class _AdminUserState extends State<StatefulWidget> {
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
-            SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
+            Scrollbar(
                 child: SingleChildScrollView(
-                  child: _getDataTable(),
-                ))
+                    scrollDirection: Axis.horizontal,
+                    child: SingleChildScrollView(
+                      child: _getDataTable(),
+                    ))),
           ],
         ),
       ),
