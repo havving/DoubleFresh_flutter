@@ -81,7 +81,7 @@ class _PickupView extends State<StatefulWidget> {
         cells.add(DataCell(Text(pickupList[i].day.toString() + '일',
             style: TextStyle(fontFamily: 'NanumSquare'),
             textAlign: TextAlign.center)));
-        cells.add(DataCell(Text(pickupList[i].time,
+        cells.add(DataCell(Text(pickupList[i].time.substring(0, 5),
             style: TextStyle(fontFamily: 'NanumSquare'),
             textAlign: TextAlign.center)));
         cells.add(DataCell(Icon(Icons.access_alarm), onTap: () async {

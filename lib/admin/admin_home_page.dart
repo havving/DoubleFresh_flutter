@@ -37,7 +37,7 @@ class _AdminHomePage extends State<StatefulWidget> {
 
     if (jsonList.length > 0) {
       for (var i in jsonList) {
-        fromList.clear();
+        // fromList.clear();
         fromList.add(AdminPickup.fromJson(i));
       }
     } else
