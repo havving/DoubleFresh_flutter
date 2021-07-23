@@ -63,7 +63,7 @@ DoubleFresh Web Application: Client (Flutter)
 
 ##### 관리자는 [픽업 현황] 탭에서 날짜별로 예약 현황을 확인할 수 있습니다.
 
-<img src="C:\Users\HAVVING\Pictures\double_fresh\admin_pickup.png" height="560"></img>
+<img src="/assets/images/admin_pickup.png" height="560"></img>
 <br/>
 
 
