@@ -1,7 +1,7 @@
 # DoubleFresh: Flutter
 
 DoubleFresh Web Application: Client (Flutter)
-
+<br/>
 
 
 ## 소개
@@ -13,7 +13,7 @@ DoubleFresh Web Application: Client (Flutter)
 ##### 비밀번호는 아이콘을 통해 보여지거나 숨길 수 있습니다.
 
 <img src="/assets/images/login.png" height="560"></img>
-
+<br/>
 
 
 ### 2. 메인 화면
@@ -24,9 +24,9 @@ DoubleFresh Web Application: Client (Flutter)
 
 ##### [예약하기] 버튼을 눌러 예약 시간까지 설정하면 예약이 완료됩니다.
 
-| <img src="/assets/images/main.png" height="560"></img> | <img src="C:\Users\HAVVING\Pictures\double_fresh\reserve.png" height="560"></img> | <img src="C:\Users\HAVVING\Pictures\double_fresh\reserve_time.png" height="560"></img> |
+| <img src="/assets/images/main.png" height="560"></img> | <img src="/assets/images/reserve.png" height="560"></img> | <img src="/assets/images/reserve_time.png" height="560"></img> |
 | :----------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-
+<br/>
 
 
 ### 3. 메뉴 화면
@@ -38,9 +38,9 @@ DoubleFresh Web Application: Client (Flutter)
 - 비밀번호 변경하기
   - 사용자의 비밀번호를 새 비밀번호로 변경할 수 있습니다.
 
-| <img src="C:\Users\HAVVING\Pictures\double_fresh\menu3.png" height="560"></img> | <img src="C:\Users\HAVVING\Pictures\double_fresh\my_pickup.png" height="560"></img> | <img src="C:\Users\HAVVING\Pictures\double_fresh\password.png" height="560"></img> |
+| <img src="/assets/images/menu3.png" height="560"></img> | <img src="/assets/images/my_pickup.png" height="560"></img> | <img src="/assets/images/password.png" height="560"></img> |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-
+<br/>
 
 
 ##### [설정] 탭에는 다음과 같은 메뉴들을 이용할 수 있습니다.
@@ -52,11 +52,11 @@ DoubleFresh Web Application: Client (Flutter)
 - 요청사항 수정하기
   - 사용자의 기존 요청사항을 수정할 수 있습니다.
 
-| <img src="C:\Users\HAVVING\Pictures\double_fresh\menu4.png" height="560"></img> | <img src="C:\Users\HAVVING\Pictures\double_fresh\pickup_day.png" height="560"></img> | <img src="C:\Users\HAVVING\Pictures\double_fresh\request.png" height="560"></img> |
+| <img src="/assets/images/menu4.png" height="560"></img> | <img src="/assets/images/pickup_day.png" height="560"></img> | <img src="/assets/images/request.png" height="560"></img> |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 
 그 밖에도, [전화] 탭을 눌러 가게에 바로 전화를 걸 수 있으며 [카카오톡] 탭을 눌러 카카오톡 메신저로 이동할 수 있습니다. 또한, [인스타그램] 탭을 눌러 가게의 SNS 링크로 접속할 수 있습니다.
-
+<br/>
 
 
 ### 4. 관리자 화면
@@ -64,7 +64,7 @@ DoubleFresh Web Application: Client (Flutter)
 ##### 관리자는 [픽업 현황] 탭에서 날짜별로 예약 현황을 확인할 수 있습니다.
 
 <img src="C:\Users\HAVVING\Pictures\double_fresh\admin_pickup.png" height="560"></img>
-
+<br/>
 
 
 ##### [구독자 관리] 탭에서 구독자들의 목록을 확인하고 관리합니다.
@@ -76,11 +76,9 @@ DoubleFresh Web Application: Client (Flutter)
 - 구독자 삭제
   - 체크박스를 선택하여 구독자를 삭제합니다.
 
-| <img src="C:\Users\HAVVING\Pictures\double_fresh\admin_user.png" height="560"></img> | <img src="C:\Users\HAVVING\Pictures\double_fresh\admin_user_detail.png" height="560"></img> | <img src="C:\Users\HAVVING\Pictures\double_fresh\admin_user_add.png" height="560"></img> |
+| <img src="/assets/images/admin_user.png" height="560"></img> | <img src="/assets/images/admin_user_detail.png" height="560"></img> | <img src="/assets/images/admin_user_add.png" height="560"></img> |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-
-
-
+<br/>
 
 
 ## Reference
@@ -90,7 +88,6 @@ DoubleFresh Web Application: Client (Flutter)
 Link: [cell_calendar][link_cell]
 
 [link_cell]: https://pub.dev/packages/cell_calendar
-
 
 
 ### calendar_strip
