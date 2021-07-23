@@ -12,7 +12,7 @@ DoubleFresh Web Application: Client (Flutter)
 
 ##### 비밀번호는 아이콘을 통해 보여지거나 숨길 수 있습니다.
 
-<img src="C:\Users\HAVVING\Pictures\double_fresh\login.png" height="560"></img>
+<img src="/assets/images/login.png" height="560"></img>
 
 
 
@@ -24,7 +24,7 @@ DoubleFresh Web Application: Client (Flutter)
 
 ##### [예약하기] 버튼을 눌러 예약 시간까지 설정하면 예약이 완료됩니다.
 
-| <img src="C:\Users\HAVVING\Pictures\double_fresh\main.png" height="560"></img> | <img src="C:\Users\HAVVING\Pictures\double_fresh\reserve.png" height="560"></img> | <img src="C:\Users\HAVVING\Pictures\double_fresh\reserve_time.png" height="560"></img> |
+| <img src="/assets/images/main.png" height="560"></img> | <img src="C:\Users\HAVVING\Pictures\double_fresh\reserve.png" height="560"></img> | <img src="C:\Users\HAVVING\Pictures\double_fresh\reserve_time.png" height="560"></img> |
 | :----------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 
 
